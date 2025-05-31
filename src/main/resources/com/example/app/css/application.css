@@ -1,0 +1,164 @@
+/* General styling */
+.root {
+    -fx-font-family: "Segoe UI";
+/*
+    -fx-background: linear-gradient(to left, #fff2de, #ffd8d8);
+*/
+    -fx-background: white;
+}
+
+/* Frosted glass effect for navigation */
+.nav-container {
+    -fx-padding: 20px 250px; /* 50px from bottom */
+}
+
+.nav-bar {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 35px;
+    -fx-border-radius: 25px;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 1px;
+    -fx-padding: 5px 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0, 0, 5);
+
+    /* Frosted glass effect */
+    -fx-background-insets: 0;
+    -fx-background-color: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.15));
+    -fx-background-blur: 10;
+    -fx-background-border: 25px;
+}
+
+/* Buttons styling */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-background-radius: 20px;
+}
+
+.nav-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Icon styling */
+.nav-button FontIcon {
+    -fx-icon-color: white;
+}
+
+.nav-button.active {
+    -fx-background-color: rgba(255, 255, 255, 0.4) !important;
+    -fx-background-radius: 20px;
+}
+
+
+/* Header Styles */
+.header-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 24pt;
+    -fx-font-weight: bold;
+}
+
+.header-subtitle {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 12pt;
+}
+
+/* Section Headers */
+.section-header {
+    -fx-text-fill: #e2e8f0;
+    -fx-font-size: 18pt;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+/* List Views */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 5;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+    -fx-border-color: rgba(255, 255, 255, 0.05);
+    -fx-border-width: 0 0 1 0;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 4;
+}
+
+/* Table View */
+.table-view {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(255, 255, 255, 0.05);
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(255, 255, 255, 0.03);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(255, 105, 180, 0.2);
+}
+
+.table-cell {
+    -fx-text-fill: #e2e8f0;
+    -fx-border-width: 0;
+}
+
+/* Buttons */
+/*.button {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+}*/
+
+.button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Play/Pause Buttons */
+.play-button {
+    -fx-background-color: rgba(255, 105, 180, 0.7);
+    -fx-background-radius: 15;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+
+.play-button:hover {
+    -fx-background-color: rgba(255, 105, 180, 0.9);
+}
+
+/* Pagination Controls */
+.pagination-control {
+    -fx-background-color: transparent;
+}
+
+.page-label {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 12pt;
+}

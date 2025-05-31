@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="now-playing" stylesheets="@../css/now_playing.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.controllers.NowPlayingController">
+    <children>
+        <Button fx:id="backButton" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <graphic>
+                <FontIcon iconLiteral="fas-angle-left" iconSize="30" styleClass="back-icon"/>
+            </graphic>
+        </Button>
+
+        <!-- Album Art with Rotation -->
+        <StackPane fx:id="albumArtContainer" layoutX="225.0" layoutY="50.0" prefHeight="150.0" prefWidth="150.0">
+            <children>
+                <Circle fill="#ffcdd8" radius="80.0" stroke="#ffcdd8" strokeType="INSIDE" />
+                <ImageView fx:id="albumArt" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/album.png" />
+                    </image>
+                    <clip>
+                        <Circle centerX="75.0" centerY="75.0" radius="75.0" />
+                    </clip>
+                </ImageView>
+                <Circle fill="#ffcfda65" radius="15.0" stroke="#ffcdd8" strokeType="INSIDE" />
+            </children>
+        </StackPane>
+
+        <Label fx:id="musicTitle" layoutX="253.0" layoutY="220.0" text="Say Yes to Heaven" textAlignment="CENTER" />
+        <Label fx:id="authorName" layoutX="253.0" layoutY="240.0" styleClass="author-name" text="Lana Del Rey">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+
+        <HBox layoutX="143.0" layoutY="265.0" spacing="5.0" styleClass="transparent">
+            <children>
+                <Label fx:id="currentTimeLabel" text="00:00" />
+                <Slider fx:id="playingSlider" prefHeight="14.0" prefWidth="240.0" />
+                <Label fx:id="totalTimeLabel" text="04:20" />
+            </children>
+        </HBox>
+
+        <HBox alignment="CENTER" layoutX="155.0" layoutY="293.0" prefHeight="50.0" prefWidth="300.0" spacing="50.0" styleClass="transparent">
+            <children>
+                <Button fx:id="previousButton" mnemonicParsing="false" styleClass="music-button" textAlignment="CENTER">
+                    <graphic>
+                        <StackPane styleClass="transparent">
+                            <Circle fill="#1f93ff00" radius="30.0" stroke="#ffcdd8" strokeType="INSIDE" />
+                            <FontIcon iconLiteral="fas-backward" iconSize="24" styleClass="play-icon"/>
+                        </StackPane>
+                    </graphic>
+                </Button>
+
+                <Button id="playButton" fx:id="playButton" mnemonicParsing="false" styleClass="music-button play-button">
+                    <graphic>
+                        <FontIcon fx:id="playIcon" iconLiteral="fas-play" iconSize="24" styleClass="play-icon"/>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="nextButton" mnemonicParsing="false" styleClass="music-button">
+                    <graphic>
+                        <StackPane styleClass="transparent">
+                            <Circle fill="#1f93ff00" radius="30.0" stroke="#ffcdd8" strokeType="INSIDE" />
+                            <FontIcon iconLiteral="fas-forward" iconSize="24" styleClass="play-icon"/>
+                        </StackPane>
+                    </graphic>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

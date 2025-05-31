@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox fx:id="root" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="250.0" styleClass="song-card" stylesheets="@../css/song_card.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.controllers.SongCardController">
+    <children>
+        <StackPane>
+            <Circle fill="#ffcdd8" radius="28.0" stroke="#ffcdd8" strokeType="INSIDE" />
+            <ImageView fx:id="albumArt" fitHeight="50" fitWidth="50" preserveRatio="true">
+                <image>
+                    <Image url="@../images/album.png" />
+                </image>
+                <clip>
+                    <Circle centerX="25" centerY="25" radius="25" />
+                </clip>
+            </ImageView>
+            <padding>
+                <Insets bottom="10.0" />
+            </padding>
+        </StackPane>
+
+        <VBox alignment="CENTER" prefHeight="35.0" prefWidth="110.0" spacing="5" styleClass="song-info">
+            <Label fx:id="songTitle" alignment="CENTER" styleClass="song-title" text="Song Title">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Label>
+            <Label fx:id="artistName" alignment="CENTER" styleClass="artist-name" text="Artist Name" translateY="-5.0">
+                <font>
+                    <Font size="8.0" />
+                </font>
+            </Label>
+            <padding>
+                <Insets bottom="5.0" />
+            </padding>
+        </VBox>
+
+
+        <Region VBox.vgrow="ALWAYS" />
+        <HBox>
+            <children>
+                <Region prefWidth="200.0" />
+                <Button fx:id="playButton" mnemonicParsing="false" styleClass="play-button" onAction="#handlePlayAction">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-play" iconSize="16" styleClass="play-icon"/>
+                    </graphic>
+                </Button>
+                <Region prefHeight="0.0" prefWidth="200.0" />
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>
