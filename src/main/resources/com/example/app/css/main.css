@@ -1,0 +1,35 @@
+.bottom-nav {
+    -fx-background-color: white;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-border-color: #d81b60;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+    -fx-spacing: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 10, 0, 0, 2);
+
+    -fx-pref-width: 280;
+    -fx-max-width: 280;
+    -fx-alignment: center;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 10;
+    -fx-background-radius: 50%;
+    -fx-alignment: center;
+}
+
+.nav-button .ikonli-font-icon {
+    -fx-fill: #d81b60;
+}
+
+
+.nav-button:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.content-pane {
+    -fx-background-color: #f5f5f5;
+}

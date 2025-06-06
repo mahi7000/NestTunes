@@ -6,15 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.io.File;
 import java.io.IOException;
-import javafx.scene.media.*;
 
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/example/app/views/Explore.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/example/app/views/Main.fxml"));
         Parent fxmlContent = fxmlLoader.load();
 
         StackPane root = new StackPane();
@@ -24,7 +21,7 @@ public class App extends Application {
         String cssPath = App.class.getResource("/com/example/app/css/styles.css").toExternalForm();
         scene.getStylesheets().add(cssPath);
 
-        stage.setTitle("Music Player");
+        stage.setTitle("NestTunes");
         stage.setScene(scene);
         stage.show();
     }
