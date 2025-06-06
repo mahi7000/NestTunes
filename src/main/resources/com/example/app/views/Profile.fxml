@@ -60,14 +60,14 @@
                                 <Label layoutX="54.0" layoutY="60.0" text="Author Name" />
 
                                 <Label layoutX="54.0" layoutY="94.0" text="Album Cover" />
-                                <Button fx:id="browseCoverButton" layoutX="167.0" layoutY="90.0" text="Browse..." />
+                                <Button fx:id="browseCoverButton" onAction="#handleCoverBrowse" layoutX="167.0" layoutY="90.0" text="Browse..." />
                                 <Label fx:id="coverPathLabel" layoutX="250.0" layoutY="94.0" text="No file selected" />
 
                                 <Label layoutX="54.0" layoutY="128.0" text="Audio File" />
-                                <Button fx:id="browseAudioButton" layoutX="167.0" layoutY="124.0" text="Browse..." />
+                                <Button fx:id="browseAudioButton" onAction="#handleAudioBrowse" layoutX="167.0" layoutY="124.0" text="Browse..." />
                                 <Label fx:id="audioPathLabel" layoutX="250.0" layoutY="128.0" text="No file selected" />
 
-                                <Button fx:id="uploadButton" layoutX="300.0" layoutY="180.0" mnemonicParsing="false" prefWidth="100.0" text="Upload" />
+                                <Button fx:id="submitButton" layoutX="420.0" layoutY="180.0" mnemonicParsing="false" prefWidth="100.0" text="Submit Post" onAction="#handleSubmit" />
                             </children>
                         </AnchorPane>
                     </content>

@@ -48,6 +48,9 @@ public class ProfileController {
 
     @FXML
     public void initialize() {
+        System.out.println("Initialize called"); // Debug
+        System.out.println("Browse cover button: " + browseCoverButton); // Should not be null
+        System.out.println("Browse audio button: " + browseAudioButton); // Should not be null
         setupDirectories();
         initializeLists();
         setupEventHandlers();
@@ -272,5 +275,43 @@ public class ProfileController {
             event.setDropCompleted(success);
             event.consume();
         });
+    }
+
+    @FXML
+    private void handleSubmit() {
+        if (!validateInput()) {
+            return;
+        }
+
+        try {
+            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
+            String baseFilename = sanitizeFilename(titleField.getText()) + "_" + timestamp;
+
+            // Save cover image if selected
+            String coverPath = null;
+            if (coverFile != null) {
+                String extension = getFileExtension(coverFile.getName());
+                coverPath = saveFile(coverFile, imagesDir, baseFilename + "_cover." + extension);
+            }
+
+            // Save audio file if selected
+            String audioPath = null;
+            if (audioFile != null) {
+                String extension = getFileExtension(audioFile.getName());
+                audioPath = saveFile(audioFile, soundsDir, baseFilename + "_audio." + extension);
+            }
+
+            // Create and add the post
+            String postEntry = String.format("%s - %s", titleField.getText(), authorField.getText());
+            posts.add(postEntry);
+
+            // Clear the form
+            resetForm();
+
+            showSuccess("Post Created", "Your music post has been submitted successfully!");
+
+        } catch (IOException e) {
+            showError("Submission Failed", "Error saving files: " + e.getMessage());
+        }
     }
 }
