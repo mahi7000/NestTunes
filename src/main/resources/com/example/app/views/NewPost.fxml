@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<VBox alignment="CENTER" spacing="20" styleClass="now-playing" stylesheets="@../css/profile.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.controllers.NewPostController">
+    <children>
+        <Label text="Create New Post" styleClass="song-title" />
+
+        <TextField fx:id="songTitleField" promptText="Song Title" />
+        <TextField fx:id="artistNameField" promptText="Artist Name" />
+
+        <StackPane>
+            <children>
+                <Circle radius="60.0" fill="#ffcdd8" stroke="#ffcdd8" strokeType="INSIDE" />
+                <ImageView fx:id="albumCoverPreview" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                    <clip>
+                        <Circle centerX="60.0" centerY="60.0" radius="60.0" />
+                    </clip>
+                </ImageView>
+                <Circle fill="#ffcfda65" radius="15.0" stroke="#ffcdd8" strokeType="INSIDE" />
+            </children>
+        </StackPane>
+
+        <Button text="Select Album Cover" onAction="#selectAlbumCover" styleClass="music-button" />
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label fx:id="audioFileLabel" text="No audio file selected" styleClass="author-name" />
+            <Button text="Select Audio File" onAction="#selectAudioFile" styleClass="music-button" />
+        </HBox>
+
+        <Button text="Create Post" onAction="#createPost" styleClass="music-button play-button" />
+    </children>
+</VBox>

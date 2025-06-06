@@ -18,6 +18,7 @@
 
 /* Form Toggle Buttons */
 .form-toggle-button {
+    -fx-background-color:  #ffcdd8;
     -fx-background-radius: 14px;
     -fx-font-size: 14px;
     -fx-padding: 10px 30px;

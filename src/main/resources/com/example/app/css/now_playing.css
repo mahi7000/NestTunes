@@ -173,16 +173,16 @@ Slider {
     .now-playing {
         -fx-padding: 15px;
     }
-    
+
     .controls-container {
         -fx-spacing: 15px;
     }
-    
+
     .music-button {
         -fx-min-width: 40px;
         -fx-min-height: 40px;
     }
-    
+
     #playButton {
         -fx-min-width: 50px;
         -fx-min-height: 50px;

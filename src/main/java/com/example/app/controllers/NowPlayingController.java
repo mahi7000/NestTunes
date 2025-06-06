@@ -76,7 +76,7 @@ public class NowPlayingController {
             });
 
             mediaPlayer.setOnEndOfMedia(() -> {
-                playIcon.setIconLiteral("fas-play");
+                playIcon.setIconLiteral("fa-play");
                 isPlaying = false;
                 rotateTransition.pause();
                 progressTimeline.stop();
@@ -114,7 +114,7 @@ public class NowPlayingController {
     private void play() {
         if (mediaPlayer != null) {
             mediaPlayer.play();
-            playIcon.setIconLiteral("fas-pause");
+            playIcon.setIconLiteral("fa-pause");
             rotateTransition.play();
             startProgressTimer();
             isPlaying = true;
@@ -124,7 +124,7 @@ public class NowPlayingController {
     private void pause() {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
-            playIcon.setIconLiteral("fas-play");
+            playIcon.setIconLiteral("fa-play");
             rotateTransition.pause();
             progressTimeline.stop();
             isPlaying = false;

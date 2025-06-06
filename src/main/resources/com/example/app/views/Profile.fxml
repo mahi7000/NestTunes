@@ -1,78 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.controllers.ProfileController">
+<AnchorPane styleClass="profile-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/profile.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.controllers.ProfileController">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="148.0" layoutX="-4.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" width="607.0" />
-        <Label layoutX="264.0" layoutY="46.0" text="Mahi &lt;3">
-            <font>
-                <Font name="System Bold" size="30.0" />
-            </font>
-        </Label>
-        <Circle fill="#ffd9df" layoutX="142.0" layoutY="69.0" radius="44.0" stroke="BLACK" strokeType="INSIDE" />
-        <Label layoutX="264.0" layoutY="91.0" text="\@pink_ogre" />
-        <ButtonBar layoutX="36.0" layoutY="154.0" prefHeight="40.0" prefWidth="500.0">
-            <buttons>
-                <Button maxWidth="-Infinity" minWidth="300.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="0.0" text="Followers(10)" />
-                <Region prefHeight="40.0" prefWidth="180.0" />
-                <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="1000.0" text="Following(10)" />
-            </buttons>
-        </ButtonBar>
-        <TabPane layoutY="194.0" prefHeight="208.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab text="Your Posts">
-                    <content>
-                        <ScrollPane prefHeight="200.0" prefWidth="600.0">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="591.0">
-                                    <children>
-                                        <ListView fx:id="postsListView" layoutX="14.0" layoutY="14.0" prefHeight="162.0" prefWidth="572.0"/>
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </ScrollPane>
-                    </content>
-                </Tab>
-                <Tab text="Your Favorites">
-                    <content>
-                        <ScrollPane prefHeight="200.0" prefWidth="600.0">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="591.0">
-                                    <children>
-                                        <ListView fx:id="favoritesListView" layoutX="14.0" layoutY="14.0" prefHeight="162.0" prefWidth="572.0"/>
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </ScrollPane>
-                    </content>
-                </Tab>
-                <Tab text="Make a Post">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="700.0">
+        <Button fx:id="backButton" mnemonicParsing="false" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <graphic>
+                <FontIcon iconLiteral="fa-angle-left" iconSize="30" styleClass="back-icon"/>
+            </graphic>
+        </Button>
+
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" AnchorPane.topAnchor="70.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="20">
+                    <children>
+                        <StackPane>
                             <children>
-                                <TextField fx:id="titleField" layoutX="167.0" layoutY="22.0" prefWidth="400.0" />
-                                <Label layoutX="54.0" layoutY="26.0" text="Music Title" />
-                                <TextField fx:id="authorField" layoutX="167.0" layoutY="56.0" prefWidth="400.0" />
-                                <Label layoutX="54.0" layoutY="60.0" text="Author Name" />
-
-                                <Label layoutX="54.0" layoutY="94.0" text="Album Cover" />
-                                <Button fx:id="browseCoverButton" onAction="#handleCoverBrowse" layoutX="167.0" layoutY="90.0" text="Browse..." />
-                                <Label fx:id="coverPathLabel" layoutX="250.0" layoutY="94.0" text="No file selected" />
-
-                                <Label layoutX="54.0" layoutY="128.0" text="Audio File" />
-                                <Button fx:id="browseAudioButton" onAction="#handleAudioBrowse" layoutX="167.0" layoutY="124.0" text="Browse..." />
-                                <Label fx:id="audioPathLabel" layoutX="250.0" layoutY="128.0" text="No file selected" />
-
-                                <Button fx:id="submitButton" layoutX="420.0" layoutY="180.0" mnemonicParsing="false" prefWidth="100.0" text="Submit Post" onAction="#handleSubmit" />
+                                <Circle radius="80.0" fill="#ffcdd8" stroke="#ffcdd8" strokeType="INSIDE" />
+                                <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/music_icon.jpg" />
+                                    </image>
+                                    <clip>
+                                        <Circle centerX="75.0" centerY="75.0" radius="75.0" />
+                                    </clip>
+                                </ImageView>
                             </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
+                        </StackPane>
+
+                        <Button text="Change Profile Picture" onAction="#changeProfilePicture" styleClass="music-button" />
+
+                        <VBox alignment="CENTER" spacing="5">
+                            <Label fx:id="userName" styleClass="song-title" text="Username" />
+                            <Label fx:id="userHandle" styleClass="author-name" text="\@handle" />
+                        </VBox>
+
+                        <HBox alignment="CENTER" spacing="20">
+                            <Button fx:id="followersButton" styleClass="transparent" />
+                            <Button fx:id="followingButton" styleClass="transparent" />
+                        </HBox>
+
+                        <TabPane fx:id="profileTabs" tabClosingPolicy="UNAVAILABLE" styleClass="transparent" prefWidth="750">
+                            <tabs>
+                                <Tab text="Your Posts">
+                                    <content>
+                                        <VBox spacing="10">
+                                            <Button text="Make a Post" onAction="#createNewPost" styleClass="music-button" />
+                                            <ListView fx:id="postsListView" styleClass="transparent" prefHeight="300" />
+                                        </VBox>
+                                    </content>
+                                </Tab>
+                                <Tab text="Your Library">
+                                    <content>
+                                        <ListView fx:id="libraryListView" styleClass="transparent" prefHeight="300" />
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
     </children>
 </AnchorPane>

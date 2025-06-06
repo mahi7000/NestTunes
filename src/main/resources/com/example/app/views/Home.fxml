@@ -30,14 +30,14 @@
                     <Button fx:id="libraryPrevBtn" text="" styleClass="pagination-button"
                             onAction="#previousLibraryPage">
                         <graphic>
-                            <FontIcon iconLiteral="fas-angle-left" iconSize="16" styleClass="play-icon"/>
+                            <FontIcon iconLiteral="fa-angle-left" iconSize="16" styleClass="play-icon"/>
                         </graphic>
                     </Button>
                     <Label fx:id="libraryPageLabel" text="Page 1"/>
                     <Button fx:id="libraryNextBtn" text="" styleClass="pagination-button"
                             onAction="#nextLibraryPage">
                         <graphic>
-                            <FontIcon iconLiteral="fas-angle-right" iconSize="16" styleClass="play-icon"/>
+                            <FontIcon iconLiteral="fa-angle-right" iconSize="16" styleClass="play-icon"/>
                         </graphic>
                     </Button>
                 </HBox>
@@ -63,14 +63,14 @@
                     <Button fx:id="recentPrevBtn" text="" styleClass="pagination-button"
                             onAction="#previousRecentPage">
                         <graphic>
-                            <FontIcon iconLiteral="fas-angle-left" iconSize="16" styleClass="play-icon"/>
+                            <FontIcon iconLiteral="fa-angle-left" iconSize="16" styleClass="play-icon"/>
                         </graphic>
                     </Button>
                     <Label fx:id="recentPageLabel" text="Page 1"/>
                     <Button fx:id="recentNextBtn" text="" styleClass="pagination-button"
                             onAction="#nextRecentPage">
                         <graphic>
-                            <FontIcon iconLiteral="fas-angle-right" iconSize="16" styleClass="play-icon"/>
+                            <FontIcon iconLiteral="fa-angle-right" iconSize="16" styleClass="play-icon"/>
                         </graphic>
                     </Button>
                 </HBox>
