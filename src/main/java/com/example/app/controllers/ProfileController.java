@@ -8,6 +8,8 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDateTime;
@@ -23,6 +25,8 @@ public class ProfileController {
     @FXML private Label coverPathLabel;
     @FXML private Label audioPathLabel;
     @FXML private Button uploadButton;
+    @FXML private Button browseCoverButton;
+    @FXML private Button browseAudioButton;
 
     // File handling
     private File coverFile;
@@ -86,39 +90,42 @@ public class ProfileController {
         );
     }
 
+
     @FXML
     private void handleCoverBrowse() {
-        FileChooser fileChooser = createFileChooser(
-                "Select Album Cover",
-                ALLOWED_IMAGE_EXTENSIONS,
-                "Image Files"
+        Window window = browseCoverButton.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Album Cover");
+
+        // Set extension filters
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
         );
 
-        coverFile = fileChooser.showOpenDialog(getStage());
-        if (coverFile != null) {
-            if (isValidExtension(coverFile, ALLOWED_IMAGE_EXTENSIONS)) {
-                coverPathLabel.setText(coverFile.getName());
-            } else {
-                showError("Invalid File", "Please select a valid image file (PNG, JPG, JPEG)");
-            }
+        File selectedFile = fileChooser.showOpenDialog(window);
+        if (selectedFile != null) {
+            coverFile = selectedFile;
+            coverPathLabel.setText(selectedFile.getName());
         }
     }
 
     @FXML
     private void handleAudioBrowse() {
-        FileChooser fileChooser = createFileChooser(
-                "Select Audio File",
-                ALLOWED_AUDIO_EXTENSIONS,
-                "Audio Files"
+        Window window = browseAudioButton.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Audio File");
+
+        // Set extension filters
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Audio Files", "*.mp3", "*.wav", "*.aac"),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
         );
 
-        audioFile = fileChooser.showOpenDialog(getStage());
-        if (audioFile != null) {
-            if (isValidExtension(audioFile, ALLOWED_AUDIO_EXTENSIONS)) {
-                audioPathLabel.setText(audioFile.getName());
-            } else {
-                showError("Invalid File", "Please select a valid audio file (MP3, WAV, AAC, OGG)");
-            }
+        File selectedFile = fileChooser.showOpenDialog(window);
+        if (selectedFile != null) {
+            audioFile = selectedFile;
+            audioPathLabel.setText(selectedFile.getName());
         }
     }
 
