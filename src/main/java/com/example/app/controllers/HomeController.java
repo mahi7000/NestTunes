@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomeController {
-    private static final String MUSIC_FOLDER = "C:\\Users\\new\\NestTunes\\src\\main\\resources\\com\\example\\app\\sounds";
-    private static final String DEFAULT_IMAGE = "C:\\Users\\new\\NestTunes\\src\\main\\resources\\com\\example\\app\\images\\music_icon.jpg";
+    private static final String MUSIC_FOLDER = "C:\\Users\\HP\\Documents\\Education\\Year 3\\Semester 2\\Advanced Programming\\Code\\app\\src\\main\\resources\\com\\example\\app\\sounds";
+    private static final String DEFAULT_IMAGE = "C:\\Users\\HP\\Documents\\Education\\Year 3\\Semester 2\\Advanced Programming\\Code\\app\\src\\main\\resources\\com\\example\\app\\images\\music_icon.jpg";
     private static final String[] SUPPORTED_FORMATS = {".mp3", ".wav", ".m4a", ".flac"};
 
     // Library pagination

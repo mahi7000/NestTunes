@@ -16,7 +16,7 @@
     <children>
         <Button fx:id="backButton" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
             <graphic>
-                <FontIcon iconLiteral="fa-angle-left" iconSize="30" styleClass="back-icon"/>
+                <FontIcon iconLiteral="fas-angle-left" iconSize="30" styleClass="back-icon"/>
             </graphic>
         </Button>
 
@@ -57,14 +57,14 @@
                     <graphic>
                         <StackPane styleClass="transparent">
                             <Circle fill="#1f93ff00" radius="30.0" stroke="#ffcdd8" strokeType="INSIDE" />
-                            <FontIcon iconLiteral="fa-backward" iconSize="24" styleClass="play-icon"/>
+                            <FontIcon iconLiteral="fas-backward" iconSize="24" styleClass="play-icon"/>
                         </StackPane>
                     </graphic>
                 </Button>
 
                 <Button id="playButton" fx:id="playButton" mnemonicParsing="false" styleClass="music-button play-button">
                     <graphic>
-                        <FontIcon fx:id="playIcon" iconLiteral="fa-play" iconSize="24" styleClass="play-icon"/>
+                        <FontIcon fx:id="playIcon" iconLiteral="fas-play" iconSize="24" styleClass="play-icon"/>
                     </graphic>
                 </Button>
 
@@ -72,7 +72,7 @@
                     <graphic>
                         <StackPane styleClass="transparent">
                             <Circle fill="#1f93ff00" radius="30.0" stroke="#ffcdd8" strokeType="INSIDE" />
-                            <FontIcon iconLiteral="fa-forward" iconSize="24" styleClass="play-icon"/>
+                            <FontIcon iconLiteral="fas-forward" iconSize="24" styleClass="play-icon"/>
                         </StackPane>
                     </graphic>
                 </Button>
