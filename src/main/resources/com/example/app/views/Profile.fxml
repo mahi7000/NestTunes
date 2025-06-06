@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.app.controllers.ProfileController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.controllers.ProfileController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="148.0" layoutX="-4.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" width="607.0" />
+        <Label layoutX="264.0" layoutY="46.0" text="Mahi &lt;3">
+            <font>
+                <Font name="System Bold" size="30.0" />
+            </font>
+        </Label>
+        <Circle fill="#ffd9df" layoutX="142.0" layoutY="69.0" radius="44.0" stroke="BLACK" strokeType="INSIDE" />
+        <Label layoutX="264.0" layoutY="91.0" text="\@pink_ogre" />
+        <ButtonBar layoutX="36.0" layoutY="154.0" prefHeight="40.0" prefWidth="500.0">
+            <buttons>
+                <Button maxWidth="-Infinity" minWidth="300.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="0.0" text="Followers(10)" />
+                <Region prefHeight="40.0" prefWidth="180.0" />
+                <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="1000.0" text="Following(10)" />
+            </buttons>
+        </ButtonBar>
+        <TabPane layoutY="194.0" prefHeight="208.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Your Posts">
+                    <content>
+                        <ScrollPane prefHeight="200.0" prefWidth="600.0">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="591.0">
+                                    <children>
+                                        <ListView fx:id="postsListView" layoutX="14.0" layoutY="14.0" prefHeight="162.0" prefWidth="572.0"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </ScrollPane>
+                    </content>
+                </Tab>
+                <Tab text="Your Favorites">
+                    <content>
+                        <ScrollPane prefHeight="200.0" prefWidth="600.0">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="591.0">
+                                    <children>
+                                        <ListView fx:id="favoritesListView" layoutX="14.0" layoutY="14.0" prefHeight="162.0" prefWidth="572.0"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </ScrollPane>
+                    </content>
+                </Tab>
+                <Tab text="Make a Post">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="700.0">
+                            <children>
+                                <TextField fx:id="titleField" layoutX="167.0" layoutY="22.0" prefWidth="400.0" />
+                                <Label layoutX="54.0" layoutY="26.0" text="Music Title" />
+                                <TextField fx:id="authorField" layoutX="167.0" layoutY="56.0" prefWidth="400.0" />
+                                <Label layoutX="54.0" layoutY="60.0" text="Author Name" />
 
-</VBox>
+                                <Label layoutX="54.0" layoutY="94.0" text="Album Cover" />
+                                <Button fx:id="browseCoverButton" layoutX="167.0" layoutY="90.0" text="Browse..." />
+                                <Label fx:id="coverPathLabel" layoutX="250.0" layoutY="94.0" text="No file selected" />
+
+                                <Label layoutX="54.0" layoutY="128.0" text="Audio File" />
+                                <Button fx:id="browseAudioButton" layoutX="167.0" layoutY="124.0" text="Browse..." />
+                                <Label fx:id="audioPathLabel" layoutX="250.0" layoutY="128.0" text="No file selected" />
+
+                                <Button fx:id="uploadButton" layoutX="300.0" layoutY="180.0" mnemonicParsing="false" prefWidth="100.0" text="Upload" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>

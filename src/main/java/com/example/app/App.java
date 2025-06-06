@@ -26,7 +26,7 @@ public class App extends Application {
 //        Scene scene = new Scene(root, 640, 480);
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/example/app/views/Home.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/example/app/views/Profile.fxml"));
         Parent fxmlContent = fxmlLoader.load();
 
         StackPane root = new StackPane();
