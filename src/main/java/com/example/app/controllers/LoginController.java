@@ -1,5 +1,11 @@
 package com.example.app.controllers;
 
+import com.example.app.services.GoogleLoginService;
+import com.example.app.utils.DatabaseConnection;
+import com.example.app.utils.PasswordUtils;
+import com.google.api.services.oauth2.model.Userinfo;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.*;
 
 public class LoginController {
 
@@ -25,82 +32,156 @@ public class LoginController {
     @FXML private TextField signupEmailField;
     @FXML private PasswordField signupPasswordField;
     @FXML private PasswordField confirmPasswordField;
+    @FXML private Button googleLoginBtn;
+
 
     @FXML
     public void initialize() {
-        // Initialize with login form visible
-        showLoginForm();
+        showLoginForm(); // Show login form by default
     }
 
     @FXML
+public void handleGoogleLogin(ActionEvent event) {
+    System.out.println("Google login button clicked!");
+    try {
+        Userinfo userInfo = GoogleLoginService.authenticateUser();
+        System.out.println("Logged in as: " + userInfo.getName() + ", email: " + userInfo.getEmail());
+
+        // Optionally insert user into database or start session
+        redirectToProfile();
+
+    } catch (Exception e) {
+        System.err.println("Google login failed: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
+    @FXML
     public void showLoginForm() {
-        // Show login form
         loginForm.setVisible(true);
         loginForm.setManaged(true);
-
-        // Hide signup form
         signupForm.setVisible(false);
         signupForm.setManaged(false);
-
-        // Update button styles
         setActiveButton(loginToggleBtn);
         setInactiveButton(signupToggleBtn);
     }
 
     @FXML
     public void showSignupForm() {
-        // Show signup form
         signupForm.setVisible(true);
         signupForm.setManaged(true);
-
-        // Hide login form
         loginForm.setVisible(false);
         loginForm.setManaged(false);
-
-        // Update button styles
         setActiveButton(signupToggleBtn);
         setInactiveButton(loginToggleBtn);
     }
 
     @FXML
     public void handleLogin() {
-        // Simple validation
-        if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+        System.out.println("✅ Login button clicked");
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        if (username.isEmpty() || password.isEmpty()) {
             System.out.println("Please fill in all fields");
             return;
         }
 
-        System.out.println("Logging in with: " + usernameField.getText());
-        redirectToHome();
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "SELECT password_hash FROM users WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String hashedPassword = rs.getString("password_hash");
+
+                if (PasswordUtils.checkPassword(password, hashedPassword)) {
+                    System.out.println("Login successful!");
+                    redirectToProfile();
+                } else {
+                    System.out.println("Incorrect password!");
+                }
+            } else {
+                System.out.println("User not found!");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Login error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void handleSignup() {
-        // Simple validation
-        if (signupUsernameField.getText().isEmpty() ||
-                signupEmailField.getText().isEmpty() ||
-                signupPasswordField.getText().isEmpty()) {
+        System.out.println("✅ Signup button clicked");
+        String username = signupUsernameField.getText();
+        String email = signupEmailField.getText();
+        String password = signupPasswordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
+
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             System.out.println("Please fill in all fields");
             return;
         }
 
-        if (!signupPasswordField.getText().equals(confirmPasswordField.getText())) {
+        if (!password.equals(confirmPassword)) {
             System.out.println("Passwords don't match!");
             return;
         }
 
-        System.out.println("Creating account for: " + signupEmailField.getText());
-        redirectToHome();
+        String hashedPassword = PasswordUtils.hashPassword(password);
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            // Check if username or email exists
+            String checkSql = "SELECT id FROM users WHERE username = ? OR email = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, username);
+            checkStmt.setString(2, email);
+            ResultSet rs = checkStmt.executeQuery();
+
+            if (rs.next()) {
+                System.out.println("Username or email already taken");
+                return;
+            }
+
+            // Insert new user
+            String sql = "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, email);
+            stmt.setString(3, hashedPassword);
+            stmt.executeUpdate();
+
+            System.out.println("Signup successful!");
+            redirectToLoginpage();
+
+        } catch (SQLException e) {
+            System.err.println("Signup error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    private void redirectToHome() {
+    private void redirectToProfile() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/music/views/NowPlaying.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/app/views/profile.fxml"));
             Stage stage = (Stage) loginForm.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            System.err.println("Failed to load home page: " + e.getMessage());
+            System.err.println("Failed to load profile page: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void redirectToLoginpage() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/app/views/login.fxml"));
+            Stage stage = (Stage) signupForm.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Failed to load LOGIN page: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -118,4 +199,5 @@ public class LoginController {
             button.getStyleClass().add("inactive-toggle");
         }
     }
+    
 }
