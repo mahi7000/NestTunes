@@ -11,11 +11,9 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-<<<<<<< HEAD
+
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/example/app/views/login.fxml"));
-=======
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/example/app/views/Main.fxml"));
->>>>>>> b7a333f (Add navigation)
+
         Parent fxmlContent = fxmlLoader.load();
 
         StackPane root = new StackPane();
