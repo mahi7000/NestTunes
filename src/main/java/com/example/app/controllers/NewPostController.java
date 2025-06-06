@@ -17,7 +17,7 @@ public class NewPostController {
     @FXML private TextField songTitleField;
     @FXML private TextField artistNameField;
     @FXML private ImageView albumCoverPreview;
-    @FXML private Label audioFileLabel;
+    @FXML private Button audioFileLabel;
 
     private File audioFile;
     private File imageFile;
@@ -65,8 +65,8 @@ public class NewPostController {
 
         try {
             // Create directories if they don't exist
-            File imagesDir = new File("images");
-            File soundsDir = new File("sounds");
+            File imagesDir = new File("src/main/resources/com/example/app/images");
+            File soundsDir = new File("src/main/resources/com/example/app/sounds");
             if (!imagesDir.exists()) imagesDir.mkdir();
             if (!soundsDir.exists()) soundsDir.mkdir();
 
@@ -74,8 +74,8 @@ public class NewPostController {
             String imageName = "cover_" + System.currentTimeMillis() + getFileExtension(imageFile.getName());
             String audioName = "track_" + System.currentTimeMillis() + getFileExtension(audioFile.getName());
 
-            File destImage = new File("images/" + imageName);
-            File destAudio = new File("sounds/" + audioName);
+            File destImage = new File("src/main/resources/com/example/app/images/" + imageName);
+            File destAudio = new File("src/main/resources/com/example/app/sounds/" + audioName);
 
             Files.copy(imageFile.toPath(), destImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(audioFile.toPath(), destAudio.toPath(), StandardCopyOption.REPLACE_EXISTING);

@@ -8,15 +8,9 @@
 
 <AnchorPane styleClass="profile-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/profile.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.controllers.ProfileController">
     <children>
-        <Button fx:id="backButton" mnemonicParsing="false" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-            <graphic>
-                <FontIcon iconLiteral="fa-angle-left" iconSize="30" styleClass="back-icon"/>
-            </graphic>
-        </Button>
-
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" AnchorPane.topAnchor="70.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <content>
-                <VBox alignment="TOP_CENTER" spacing="20">
+                <VBox alignment="TOP_CENTER" spacing="20" styleClass="scroll-content">
                     <children>
                         <StackPane>
                             <children>
@@ -35,8 +29,8 @@
                         <Button text="Change Profile Picture" onAction="#changeProfilePicture" styleClass="music-button" />
 
                         <VBox alignment="CENTER" spacing="5">
-                            <Label fx:id="userName" styleClass="song-title" text="Username" />
-                            <Label fx:id="userHandle" styleClass="author-name" text="\@handle" />
+                            <Label fx:id="userName" styleClass="profile-name" text="Username" />
+                            <Label fx:id="userHandle" styleClass="profile-handle" text="\@handle" />
                         </VBox>
 
                         <HBox alignment="CENTER" spacing="20">
@@ -48,9 +42,9 @@
                             <tabs>
                                 <Tab text="Your Posts">
                                     <content>
-                                        <VBox spacing="10">
+                                        <VBox spacing="10" styleClass="transparent">
                                             <Button text="Make a Post" onAction="#createNewPost" styleClass="music-button" />
-                                            <ListView fx:id="postsListView" styleClass="transparent" prefHeight="300" />
+                                            <ListView fx:id="postsListView" prefHeight="300" />
                                         </VBox>
                                     </content>
                                 </Tab>

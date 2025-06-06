@@ -1,0 +1,64 @@
+/* Custom Window Frame Styling */
+.root {
+    -fx-background-color: transparent;
+}
+
+.window-frame {
+    -fx-background-color: white;
+    -fx-background-radius: 20px; /* Rounded corners for the window */
+    -fx-border-color: #ffcdd8;
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px; /* Match background radius */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 0);
+}
+
+.title-bar {
+    -fx-background-color: white;
+    -fx-background-radius: 20px 20px 0 0; /* Only round top corners */
+    -fx-padding: 10px;
+}
+
+.window-title {
+    -fx-text-fill: #d81b60; /* Title text color */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.window-controls {
+    -fx-spacing: 10px;
+}
+
+.window-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 50%;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+    -fx-max-width: 30px;
+    -fx-max-height: 30px;
+}
+
+.window-button:hover {
+    -fx-background-color: #ffeeee;
+}
+
+.window-close-button:hover {
+    -fx-background-color: #ffcdd8;
+}
+
+.window-icon {
+    -fx-fill: #666666;
+}
+
+.window-close-button .window-icon {
+    -fx-fill: #d81b60;
+}
+
+.window-button:hover .window-icon {
+    -fx-fill: #d81b60;
+}
+
+/* Rest of your existing styles... */
+.profile-container {
+    -fx-background-radius: 20px; /* Match window radius */
+    /* ... other existing styles ... */
+}

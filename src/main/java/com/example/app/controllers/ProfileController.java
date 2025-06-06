@@ -77,7 +77,7 @@ public class ProfileController {
         if (selectedFile != null) {
             try {
                 // Create images directory if it doesn't exist
-                File imagesDir = new File("images");
+                File imagesDir = new File("/com/example/app/images");
                 if (!imagesDir.exists()) {
                     imagesDir.mkdir();
                 }

@@ -34,7 +34,7 @@
 
 /* Focused effect */
 .button:focused {
-    -fx-border-color: #2196F3;
+    -fx-border-color: #d81b60;
     -fx-border-radius: 17px;
     -fx-border-width: 2px;
 }
@@ -161,9 +161,9 @@
 
 /* Profile Info */
 .profile-name {
-    -fx-font-size: 1.8em;
+    -fx-font-size: 2.3em;
     -fx-font-weight: 800;
-    -fx-text-fill: #2d2d2d;
+    -fx-text-fill: #d81b60;
 }
 
 .profile-handle {
@@ -193,27 +193,6 @@
     -fx-text-fill: #ff9eaf;
 }
 
-/* Tabs */
-.profile-tabs {
-    -fx-tab-min-width: 120px;
-    -fx-tab-max-width: 200px;
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-}
-
-.profile-tabs .tab {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-font-weight: bold;
-    -fx-text-fill: #666666;
-    -fx-padding: 10px 20px;
-}
-
-.profile-tabs .tab:selected {
-    -fx-border-color: #ffcdd8;
-    -fx-border-width: 0 0 3px 0;
-    -fx-text-fill: #2d2d2d;
-}
 
 .profile-tabs .tab-content-area {
     -fx-background-color: transparent;
@@ -241,6 +220,7 @@
 
 .list-cell:filled:selected {
     -fx-background-color: rgba(255, 205, 216, 0.2);
+    -fx-text-fill: #d81b60;
 }
 
 /* Buttons */
@@ -264,6 +244,13 @@
     -fx-background-color: #ff9eaf;
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
+}
+
+.new-post-button {
+    -fx-background-color: #ffebee;
+    -fx-text-fill: #d81b60;
+    -fx-border-radius: 20px; /* Match background radius */
+    -fx-border-width: 2px;
 }
 
 /* New Post Dialog */
@@ -314,6 +301,112 @@
         -fx-padding: 8px 10px;
         -fx-font-size: 0.9em;
     }
+}
+
+* {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.transparent {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* ScrollPane Styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Scroll Bars */
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #ffcdd8;
+    -fx-background-radius: 1em;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+/* Style the scroll bar track */
+.scroll-pane > .scroll-bar:vertical > .track,
+.scroll-pane > .scroll-bar:horizontal > .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+
+/* Style the vertical scroll bar thumb */
+.scroll-pane > .scroll-bar:vertical > .thumb {
+    -fx-background-color: #ffcdd8;
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 1em;
+}
+
+/* Style the horizontal scroll bar thumb */
+.scroll-pane > .scroll-bar:horizontal > .thumb {
+    -fx-background-color: #ffcdd8;
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 1em;
+}
+
+/* Style the scroll bar buttons (arrows) */
+.scroll-pane > .scroll-bar > .increment-button,
+.scroll-pane > .scroll-bar > .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Style the scroll bar corner */
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
+/* Optional: Hover effect for scroll bar thumb */
+.scroll-pane > .scroll-bar > .thumb:hover {
+    -fx-background-color: derive(#d81b60, -10%);
+}
+
+/* Optional: Pressed effect for scroll bar thumb */
+.scroll-pane > .scroll-bar > .thumb:pressed {
+    -fx-background-color: derive(#d81b60, -20%);
+}
+
+/* Input Fields */
+.text-field {
+    -fx-background-radius: 20px;
+    -fx-background-color: rgba(255, 205, 216, 0.2);
+    -fx-border-color: #ffcdd8;
+    -fx-border-width: 1;
+    -fx-border-radius: 20px;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+    -fx-pref-width: 250px;
+}
+
+.text-field:focused {
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(one-pass-box, rgba(255, 205, 216, 0.4), 0, 0.0, 3, 3);
 }
 
 /* Animation Classes */

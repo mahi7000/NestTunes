@@ -21,7 +21,7 @@ public class App extends Application {
         root.getChildren().addAll(fxmlContent);
 
         Scene scene = new Scene(root, 800, 600);
-        String cssPath = App.class.getResource("/com/example/app/css/application.css").toExternalForm();
+        String cssPath = App.class.getResource("/com/example/app/css/styles.css").toExternalForm();
         scene.getStylesheets().add(cssPath);
 
         stage.setTitle("Music Player");
