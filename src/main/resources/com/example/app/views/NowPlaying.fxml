@@ -37,7 +37,7 @@
         </StackPane>
 
         <Label fx:id="musicTitle" layoutX="253.0" layoutY="220.0" text="Say Yes to Heaven" textAlignment="CENTER" />
-        <Label fx:id="authorName" layoutX="253.0" layoutY="240.0" styleClass="author-name" text="Lana Del Rey">
+        <Label fx:id="authorName" layoutX="253.0" layoutY="240.0" styleClass="author-name" text="Lana Del Rey" onMouseClicked="#handleAuthorClick">
             <font>
                 <Font size="10.0" />
             </font>

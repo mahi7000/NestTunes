@@ -7,12 +7,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
-
 import java.io.*;
 
 public class NowPlayingController {
@@ -95,6 +95,24 @@ public class NowPlayingController {
         rotateTransition.setCycleCount(Animation.INDEFINITE);
         rotateTransition.setInterpolator(Interpolator.LINEAR);
         rotateTransition.pause();
+    }
+
+    @FXML
+    private void handleAuthorClick(MouseEvent event) {
+        try {
+            // Load the new FXML file (e.g., "AuthorPage.fxml")
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/app/views/OthersProfile.fxml"));
+
+            // Get the current stage (window)
+            Stage stage = (Stage) authorName.getScene().getWindow();
+
+            // Set the new scene
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading author page: " + e.getMessage());
+        }
     }
 
     private void setupPlayPauseToggle() {

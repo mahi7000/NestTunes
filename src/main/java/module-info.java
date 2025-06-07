@@ -19,6 +19,7 @@ module com.example.app {
     requires javafx.base;
     requires javafx.graphics;
     requires jbcrypt;
+    requires java.desktop;
 
 
     opens com.example.app to javafx.fxml;
