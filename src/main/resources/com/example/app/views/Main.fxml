@@ -19,22 +19,22 @@
     <HBox alignment="center" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <HBox fx:id="bottomNav" styleClass="bottom-nav" spacing="20" alignment="center">
             <!-- Buttons -->
-            <Button styleClass="nav-button" onAction="#navigateToHome">
+            <Button styleClass="nav-button" onAction="#navigateToHome" fx:id="homeButton">
                 <graphic><FontIcon iconLiteral="fas-home" iconSize="20"/></graphic>
                 <tooltip><Tooltip text="Home"/></tooltip>
             </Button>
 
-            <Button styleClass="nav-button" onAction="#navigateToExplore">
+            <Button styleClass="nav-button" onAction="#navigateToExplore" fx:id="exploreButton">
                 <graphic><FontIcon iconLiteral="fas-search" iconSize="20"/></graphic>
                 <tooltip><Tooltip text="Explore"/></tooltip>
             </Button>
 
-            <Button styleClass="nav-button" onAction="#navigateToNowPlaying">
+            <Button styleClass="nav-button" onAction="#navigateToNowPlaying" fx:id="nowPlayingButton">
                 <graphic><FontIcon iconLiteral="fas-music" iconSize="20"/></graphic>
                 <tooltip><Tooltip text="Now Playing"/></tooltip>
             </Button>
 
-            <Button styleClass="nav-button" onAction="#navigateToProfile">
+            <Button styleClass="nav-button" onAction="#navigateToProfile" fx:id="profileButton">
                 <graphic><FontIcon iconLiteral="fas-user" iconSize="20"/></graphic>
                 <tooltip><Tooltip text="Profile"/></tooltip>
             </Button>
@@ -45,4 +45,10 @@
             </ToggleButton>
         </HBox>
     </HBox>
+    <AnchorPane fx:id="floatingWidgetContainer"
+                pickOnBounds="false"
+                AnchorPane.bottomAnchor="20"
+                AnchorPane.rightAnchor="20"
+                prefWidth="100" prefHeight="100"/>
+
 </AnchorPane>

@@ -10,8 +10,10 @@
             stylesheets="@../css/home.css">
     <content>
         <VBox styleClass="home-container" spacing="20">
+            <Label styleClass="home-title" text="Home" />
             <!-- Your Library Section -->
-            <VBox spacing="10">
+            <VBox spacing="10" styleClass="home-section">
+
                 <Label text="Your Library" styleClass="section-title"/>
 
                 <GridPane fx:id="librarySongsContainer" styleClass="songs-grid" hgap="20" vgap="10">
@@ -44,7 +46,7 @@
             </VBox>
 
             <!-- Recently Played Section -->
-            <VBox spacing="10">
+            <VBox spacing="10" styleClass="home-section">
                 <Label text="Recently Played" styleClass="section-title"/>
 
                 <GridPane fx:id="recentSongsContainer" styleClass="songs-grid" hgap="20" vgap="10">

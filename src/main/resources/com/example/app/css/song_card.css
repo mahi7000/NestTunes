@@ -9,6 +9,23 @@
     -fx-margin: 5px;
 }
 
+.song-card:hover {
+    -fx-border-color: #ffcdd8;
+    -fx-background-color: linear-gradient(to bottom, #fff9fa 0%, #ffeef1 100%);
+    -fx-effect: dropshadow(gaussian, rgba(255,205,216,0.2), 10, 0, 0, 2);
+
+    /* Optional scale effect */
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+
+/* For pressed state */
+.song-card:pressed {
+    -fx-background-color: linear-gradient(to bottom, #ffeef1 0%, #ffdfe6 100%);
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+}
+
 .song-title {
     -fx-font-size: 14px;
     -fx-font-weight: 800;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane fx:id="floatingPlayer"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.app.controllers.FloatingPlayerController"
+           prefWidth="100" prefHeight="100"
+           style="-fx-cursor: hand;"
+           visible="false"
+           styleClass="floating-player"
+           stylesheets="@../css/floating_player.css">
+
+    <StackPane fx:id="albumArtContainer" layoutX="180.0" layoutY="20.0" prefHeight="100.0" prefWidth="100.0" styleClass="album-art-margin">
+        <children>
+            <Circle fill="#d81b60" radius="55.0" stroke="#d81b60" strokeType="INSIDE" />
+            <ImageView fx:id="miniAlbumArt" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../images/music_icon.jpg" />
+                </image>
+                <clip>
+                    <Circle centerX="50.0" centerY="50.0" radius="50.0" />
+                </clip>
+            </ImageView>
+            <Circle fill="#ffcfda65" radius="5.0" stroke="#ffcdd8" strokeType="INSIDE" />
+        </children>
+    </StackPane>
+    <StackPane fx:id="playPauseButton"
+               prefWidth="30" prefHeight="30"
+               styleClass="play-button">
+        <FontIcon fx:id="playPauseIcon" iconLiteral="fas-pause" iconSize="16" />
+    </StackPane>
+</StackPane>
+

@@ -2,11 +2,13 @@ package com.example.app.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -146,20 +148,15 @@ public class HomeController {
     }
 
     private void playSong(Song song) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/app/views/NowPlaying.fxml"));
-            Parent nowPlayingRoot = loader.load();
+        // Get the NavigationController from the scene
+        StackPane contentPane = (StackPane) librarySongsContainer.getScene().lookup("#contentPane");
+        if (contentPane != null) {
+            NavigationController navController = (NavigationController)
+                    contentPane.getScene().getRoot().getProperties().get("controller");
 
-            // Get the controller and pass the song data
-            NowPlayingController nowPlayingController = loader.getController();
-            nowPlayingController.setSong(song);
-
-            // Switch to the Now Playing view
-            Stage stage = (Stage) librarySongsContainer.getScene().getWindow();
-            stage.setScene(new Scene(nowPlayingRoot));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (navController != null) {
+                navController.playSong(song);
+            }
         }
     }
 

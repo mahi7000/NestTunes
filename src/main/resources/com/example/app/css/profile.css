@@ -1,12 +1,10 @@
 /* Profile Page Styles */
 .profile-container {
-    -fx-background-radius: 30px;
-    -fx-border-color: #ffcdd8;
-    -fx-border-width: 1;
-    -fx-border-radius: 30px;
-    -fx-effect: dropshadow(one-pass-box, rgba(255, 205, 216, 0.6), 0, 0.0, 10, 15);
-    -fx-padding: 20px;
     -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #fff9fa 100%);
+}
+
+.scroll-content {
+    -fx-padding: 20px;
 }
 
 /* Basic button styling */
