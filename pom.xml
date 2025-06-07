@@ -17,6 +17,48 @@
     </properties>
 
     <dependencies>
+    <!-- Google OAuth 2.0 Client -->
+    <dependency>
+        <groupId>com.google.oauth-client</groupId>
+        <artifactId>google-oauth-client-jetty</artifactId>
+        <version>1.34.1</version>
+    </dependency>
+
+    <!-- Google API Client -->
+    <dependency>
+        <groupId>com.google.api-client</groupId>
+        <artifactId>google-api-client</artifactId>
+        <version>1.34.1</version>
+    </dependency>
+
+    <!-- Google OAuth2 API -->
+    <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-oauth2</artifactId>
+        <version>v2-rev157-1.25.0</version>
+    </dependency>
+
+    <dependency>
+  <groupId>com.google.http-client</groupId>
+  <artifactId>google-http-client-jackson2</artifactId>
+  <version>1.41.8</version> <!-- or latest version -->
+</dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+            <!-- BCrypt for password hashing -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+        
+        
+        
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -34,7 +76,7 @@
         </dependency>
         <dependency>
             <groupId>org.kordamp.ikonli</groupId>
-            <artifactId>ikonli-javafx</artifactId>
+            <artifactId>ikonli-core</artifactId>
             <version>12.3.1</version>
         </dependency>
         <dependency>
@@ -73,25 +115,26 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
-                <executions>
-                    <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
-                        <id>default-cli</id>
-                        <configuration>
-                            <mainClass>com.example.app/com.example.app.App</mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
-                            <noManPages>true</noManPages>
-                            <stripDebug>true</stripDebug>
-                            <noHeaderFiles>true</noHeaderFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-maven-plugin</artifactId>
+    <version>0.0.8</version>
+    <executions>
+        <execution>
+            <id>default-cli</id>
+            <configuration>
+                <mainClass>com.example.app/com.example.app.App</mainClass>
+                <launcher>app</launcher>
+                <jlinkZipName>app</jlinkZipName>
+                <jlinkImageName>app</jlinkImageName>
+                <noManPages>true</noManPages>
+                <stripDebug>true</stripDebug>
+                <noHeaderFiles>true</noHeaderFiles>
+                <modules>javafx.controls,javafx.fxml,javafx.media</modules>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
         </plugins>
     </build>
 </project>
