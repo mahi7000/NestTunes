@@ -1,6 +1,7 @@
 package com.example.app.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +15,7 @@ public class SongCardController {
     @FXML private ImageView albumArt;
     @FXML private Label songTitle;
     @FXML private Label artistName;
+    @FXML private Button playButton;
 
     private Song song;
     private Runnable playAction;
@@ -25,6 +27,10 @@ public class SongCardController {
         this.song = new Song(title, artist, imagePath);
         updateUI();
         setupClickHandler();
+
+        playButton.setOnAction(e -> {
+            playAction.run(); // This should call the fixed playSong method
+        });
     }
 
     /**

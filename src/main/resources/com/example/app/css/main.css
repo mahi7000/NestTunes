@@ -25,6 +25,17 @@
     -fx-fill: #d81b60;
 }
 
+.nav-button.active {
+    -fx-background-color: #d81b60;
+    -fx-background-radius: 50%;
+    -fx-text-fill: #3366ff;
+}
+
+/* You might also want to style the icon */
+.nav-button.active .ikonli-font-icon {
+    -fx-icon-color: white;
+}
+
 
 .nav-button:hover {
     -fx-background-color: #f0f0f0;

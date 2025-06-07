@@ -1,0 +1,22 @@
+.floating_player {
+    -fx-background-color: transparent;
+}
+
+
+.album-art-margin {
+    -fx-margin-bottom: 20px;
+    -fx-background-color: transparent;
+}
+
+.play-button {
+    -fx-background-color: transparent;
+}
+
+.play-button FontIcon {
+   -fx-fill: #d81b60;
+   -fx-icon-size: 16px;
+}
+
+.play-button:hover FontIcon {
+    -fx-fill: #ff9eb5;
+}

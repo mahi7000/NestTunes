@@ -3,17 +3,17 @@ package com.example.app.controllers;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.media.*;
-import javafx.stage.Stage;
+import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
-import java.io.*;
+
+import java.io.File;
+import java.io.IOException;
 
 public class NowPlayingController {
     @FXML private Label musicTitle;
@@ -25,67 +25,69 @@ public class NowPlayingController {
     @FXML private FontIcon playIcon;
     @FXML private Label currentTimeLabel;
     @FXML private Label totalTimeLabel;
-    @FXML private Button backButton;
+    @FXML private Button likeButton;
+    @FXML private FontIcon likeIcon;
 
-    private MediaPlayer mediaPlayer;
     private RotateTransition rotateTransition;
     private Timeline progressTimeline;
-    private boolean isPlaying = false;
-    private Song currentSong;
+    private MediaManager mediaManager;
 
     @FXML
     public void initialize() {
+        mediaManager = MediaManager.getInstance();
         setupRotationAnimation();
-        setupPlayPauseToggle();
-        setupBackButton();
+        setupMediaListeners();
+        setupPlayButton();
+        setupLikeButton();
+
+        // Set initial state based on current media player
+        if (mediaManager.getMediaPlayer() != null) {
+            updateUI();
+            if (mediaManager.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
+                rotateTransition.play();
+                startProgressTimer();
+            }
+        }
     }
 
     public void setSong(Song song) {
-        this.currentSong = song;
+        // Stop current animations and timers
+        stopProgressTimer();
+        rotateTransition.stop();
 
-        // Update UI with song data
-        musicTitle.setText(song.getTitle());
-        authorName.setText(song.getArtist());
+        // Update media manager with new song
+        mediaManager.playSong(song);
 
-        try {
-            Image image = new Image(new File(song.getImagePath()).toURI().toString());
-            albumArt.setImage(image);
-        } catch (Exception e) {
-            albumArt.setImage(new Image(getClass().getResourceAsStream("/com/example/app/images/music_icon.jpg")));
+        // Setup new listeners for the new media player
+        setupMediaListeners();
+
+        // Update UI with new song data
+        updateUI();
+
+        // Start animations if playing
+        if (mediaManager.getMediaPlayer() != null &&
+                mediaManager.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
+            rotateTransition.play();
+            startProgressTimer();
         }
-
-        // Initialize media player
-        initializeMediaPlayer(song.getFilePath());
     }
 
-    private void initializeMediaPlayer(String filePath) {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.dispose();
-        }
+    private void updateUI() {
+        Song song = mediaManager.getCurrentSong();
+        if (song != null) {
+            musicTitle.setText(song.getTitle());
+            authorName.setText(song.getArtist());
 
-        try {
-            Media media = new Media(new File(filePath).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
+            try {
+                Image image = new Image(new File(song.getImagePath()).toURI().toString());
+                albumArt.setImage(image);
+            } catch (Exception e) {
+                albumArt.setImage(new Image(getClass().getResourceAsStream("/images/default_album.png")));
+            }
 
-            // Set up media player event handlers
-            mediaPlayer.setOnReady(() -> {
-                Duration duration = mediaPlayer.getMedia().getDuration();
-                totalTimeLabel.setText(formatTime(duration.toSeconds()));
-                playingSlider.setMax(duration.toSeconds());
-            });
-
-            mediaPlayer.setOnEndOfMedia(() -> {
-                playIcon.setIconLiteral("fas-play");
-                isPlaying = false;
-                rotateTransition.pause();
-                progressTimeline.stop();
-            });
-
-            // Start playback automatically
-            play();
-        } catch (Exception e) {
-            System.err.println("Error loading media: " + e.getMessage());
+            playIcon.setIconLiteral(mediaManager.getMediaPlayer() != null &&
+                    mediaManager.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING ?
+                    "fas-pause" : "fas-play");
         }
     }
 
@@ -94,99 +96,132 @@ public class NowPlayingController {
         rotateTransition.setByAngle(360);
         rotateTransition.setCycleCount(Animation.INDEFINITE);
         rotateTransition.setInterpolator(Interpolator.LINEAR);
-        rotateTransition.pause();
-    }
 
-    @FXML
-    private void handleAuthorClick(MouseEvent event) {
-        try {
-            // Load the new FXML file (e.g., "AuthorPage.fxml")
-            Parent root = FXMLLoader.load(getClass().getResource("/com/example/app/views/OthersProfile.fxml"));
-
-            // Get the current stage (window)
-            Stage stage = (Stage) authorName.getScene().getWindow();
-
-            // Set the new scene
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error loading author page: " + e.getMessage());
-        }
-    }
-
-    private void setupPlayPauseToggle() {
-        playButton.setOnAction(event -> togglePlayPause());
-    }
-
-    private void togglePlayPause() {
-        if (mediaPlayer == null) return;
-
-        if (isPlaying) {
-            pause();
-        } else {
-            play();
-        }
-    }
-
-    private void play() {
-        if (mediaPlayer != null) {
-            mediaPlayer.play();
-            playIcon.setIconLiteral("fas-pause");
+        MediaPlayer player = mediaManager.getMediaPlayer();
+        if (player != null && player.getStatus() == MediaPlayer.Status.PLAYING) {
             rotateTransition.play();
-            startProgressTimer();
-            isPlaying = true;
+        } else {
+            rotateTransition.pause();
         }
     }
 
-    private void pause() {
-        if (mediaPlayer != null) {
-            mediaPlayer.pause();
-            playIcon.setIconLiteral("fas-play");
-            rotateTransition.pause();
-            progressTimeline.stop();
-            isPlaying = false;
+    private void setupMediaListeners() {
+        MediaPlayer player = mediaManager.getMediaPlayer();
+        if (player != null) {
+            // Clear existing listeners to avoid duplicates
+            player.setOnReady(null);
+            player.setOnEndOfMedia(null);
+
+            player.setOnReady(() -> {
+                totalTimeLabel.setText(formatTime(mediaManager.getTotalDuration().toSeconds()));
+                playingSlider.setMax(mediaManager.getTotalDuration().toSeconds());
+                playingSlider.setValue(0);
+                currentTimeLabel.setText("00:00");
+            });
+
+            player.setOnEndOfMedia(() -> {
+                playIcon.setIconLiteral("fas-play");
+                rotateTransition.pause();
+                stopProgressTimer();
+                playingSlider.setValue(0);
+                currentTimeLabel.setText("00:00");
+            });
+
+            player.setOnPlaying(() -> {
+                playIcon.setIconLiteral("fas-pause");
+                rotateTransition.play();
+                startProgressTimer();
+            });
+
+            player.setOnPaused(() -> {
+                playIcon.setIconLiteral("fas-play");
+                rotateTransition.pause();
+                stopProgressTimer();
+            });
         }
+    }
+
+    private void setupPlayButton() {
+        playButton.setOnAction(event -> {
+            mediaManager.togglePlayPause();
+            MediaPlayer.Status status = mediaManager.getMediaPlayer().getStatus();
+            playIcon.setIconLiteral(status == MediaPlayer.Status.PLAYING ? "fas-pause" : "fas-play");
+
+            if (status == MediaPlayer.Status.PLAYING) {
+                rotateTransition.play();
+                startProgressTimer();
+            } else {
+                rotateTransition.pause();
+                stopProgressTimer();
+            }
+        });
+    }
+
+    private void setupLikeButton() {
+        likeButton.setOnAction(event -> toggleLike());
+    }
+
+    private void toggleLike() {
+        likeIcon.setIconLiteral(likeIcon.getIconLiteral().equals("far-star") ? "fas-star" : "far-star");
     }
 
     private void startProgressTimer() {
-        if (progressTimeline != null) {
-            progressTimeline.stop();
-        }
+        stopProgressTimer();
 
         progressTimeline = new Timeline(
-                new KeyFrame(Duration.millis(100), event -> {
-                    if (mediaPlayer != null) {
-                        Duration currentTime = mediaPlayer.getCurrentTime();
-                        currentTimeLabel.setText(formatTime(currentTime.toSeconds()));
-                        playingSlider.setValue(currentTime.toSeconds());
-                    }
+                new KeyFrame(Duration.millis(100), e -> {
+                    currentTimeLabel.setText(formatTime(mediaManager.getCurrentTime().toSeconds()));
+                    playingSlider.setValue(mediaManager.getCurrentTime().toSeconds());
                 })
         );
         progressTimeline.setCycleCount(Animation.INDEFINITE);
         progressTimeline.play();
     }
 
-    private void setupBackButton() {
-        backButton.setOnAction(event -> {
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-            }
-            // Return to home screen
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/com/example/music/views/Home.fxml"));
-                Stage stage = (Stage) backButton.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+    private void stopProgressTimer() {
+        if (progressTimeline != null) {
+            progressTimeline.stop();
+        }
     }
 
     private String formatTime(double seconds) {
         int minutes = (int) seconds / 60;
         int secs = (int) seconds % 60;
         return String.format("%02d:%02d", minutes, secs);
+    }
+
+    @FXML
+    private void handleAuthorClick(MouseEvent event) {
+        try {
+            // Get the current song's artist
+            Song currentSong = mediaManager.getCurrentSong();
+            if (currentSong == null) return;
+
+            // Load the OthersProfile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/app/views/OthersProfile.fxml"));
+            Node othersProfileView = loader.load();
+
+            // Get the controller and pass artist data if needed
+
+            // Get the NavigationController from the current scene
+            StackPane contentPane = (StackPane) authorName.getScene().lookup("#contentPane");
+            if (contentPane != null) {
+                contentPane.getChildren().setAll(othersProfileView);
+
+                // Update navigation state if using NavigationController
+                NavigationController navController = (NavigationController)
+                        contentPane.getScene().getRoot().getProperties().get("controller");
+                if (navController != null) {
+                    navController.updateActiveButton("profile");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading author profile: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public ImageView getAlbumArtImageView() {
+        return albumArt; // assuming albumArt is already defined as @FXML ImageView
     }
 }

@@ -2,43 +2,49 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.fxml.FXMLLoader?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.app.controllers.MainController"
-            stylesheets="@../styles/navbar.css">
+            stylesheets="@../css/main.css">
     
-    <!-- Left side navigation -->
+    <!-- Left Navigation -->
     <left>
-        <fx:include source="navbar.fxml"/>
+        <fx:include source="navbar.fxml" fx:id="navBar"/>
     </left>
     
-    <!-- Main content area -->
+    <!-- Main Content Area -->
     <center>
         <StackPane fx:id="contentArea" style="-fx-background-color: #121212;"/>
     </center>
     
-    <!-- Bottom player controls -->
+    <!-- Bottom Player Controls -->
     <bottom>
-        <VBox style="-fx-background-color: #181818; -fx-padding: 10;">
-            <HBox alignment="CENTER_LEFT" spacing="10">
-                <!-- Now playing info -->
-                <Label fx:id="nowPlayingLabel" style="-fx-text-fill: white;"/>
-                
-                <Region HBox.hgrow="ALWAYS"/>
-                
-                <!-- Player controls -->
-                <Button fx:id="previousButton" styleClass="player-button"/>
-                <Button fx:id="playPauseButton" styleClass="player-button"/>
-                <Button fx:id="nextButton" styleClass="player-button"/>
-                
-                <!-- Volume control -->
-                <Slider fx:id="volumeSlider" prefWidth="100"/>
+        <VBox styleClass="player-controls">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            
+            <!-- Now Playing Info -->
+            <Label fx:id="nowPlayingLabel" text="No track playing" 
+                   styleClass="now-playing-label"/>
+            
+            <!-- Player Controls -->
+            <HBox alignment="CENTER" spacing="20">
+                <Button fx:id="previousButton" onAction="#handlePrevious"
+                        styleClass="control-button"/>
+                <Button fx:id="playPauseButton" onAction="#handlePlayPause"
+                        styleClass="control-button"/>
+                <Button fx:id="nextButton" onAction="#handleNext"
+                        styleClass="control-button"/>
             </HBox>
             
-            <!-- Progress bar -->
-            <Slider fx:id="progressSlider" styleClass="progress-slider"/>
+            <!-- Progress and Volume -->
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Slider fx:id="progressSlider" styleClass="progress-slider"/>
+                <Slider fx:id="volumeSlider" styleClass="volume-slider"/>
+            </HBox>
         </VBox>
     </bottom>
 </BorderPane>
