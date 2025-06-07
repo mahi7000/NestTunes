@@ -1,4 +1,6 @@
 .song-card {
+    -fx-pref-width: -1; /* Let parent determine width */
+    -fx-max-width: infinity;
     -fx-background-radius: 30px;
     -fx-border-color: #ffcdd8;
     -fx-border-width: 1;
@@ -11,12 +13,20 @@
     -fx-font-size: 14px;
     -fx-font-weight: 800;
     -fx-text-fill: #2d2d2d;
+    -fx-max-width: infinity;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
 }
 
 .artist-name {
     -fx-font-size: 8px;
     -fx-font-weight: 500;
     -fx-text-fill: #666666;
+    -fx-max-width: infinity;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
 }
 
 .play-button {

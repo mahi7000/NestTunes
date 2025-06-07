@@ -1,9 +1,9 @@
 package com.example.app.controllers;
 
-import com.example.app.services.GoogleLoginService;
+
 import com.example.app.utils.DatabaseConnection;
 import com.example.app.utils.PasswordUtils;
-import com.google.api.services.oauth2.model.Userinfo;
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,21 +40,6 @@ public class LoginController {
         showLoginForm(); // Show login form by default
     }
 
-    @FXML
-public void handleGoogleLogin(ActionEvent event) {
-    System.out.println("Google login button clicked!");
-    try {
-        Userinfo userInfo = GoogleLoginService.authenticateUser();
-        System.out.println("Logged in as: " + userInfo.getName() + ", email: " + userInfo.getEmail());
-
-        // Optionally insert user into database or start session
-        redirectToProfile();
-
-    } catch (Exception e) {
-        System.err.println("Google login failed: " + e.getMessage());
-        e.printStackTrace();
-    }
-}
 
     @FXML
     public void showLoginForm() {
@@ -132,6 +117,8 @@ public void handleGoogleLogin(ActionEvent event) {
 
         String hashedPassword = PasswordUtils.hashPassword(password);
 
+
+
         try (Connection conn = DatabaseConnection.getConnection()) {
             // Check if username or email exists
             String checkSql = "SELECT id FROM users WHERE username = ? OR email = ?";
@@ -199,5 +186,5 @@ public void handleGoogleLogin(ActionEvent event) {
             button.getStyleClass().add("inactive-toggle");
         }
     }
-    
+
 }

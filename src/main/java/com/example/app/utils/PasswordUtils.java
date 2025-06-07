@@ -1,5 +1,6 @@
 package com.example.app.utils;
 
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class PasswordUtils {
@@ -10,5 +11,5 @@ public class PasswordUtils {
     public static boolean checkPassword(String plainPassword, String hashedPassword) {
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }
-    
+
 }

@@ -15,13 +15,13 @@ public class DatabaseConnection {
     }
 
     // TEMPORARY TEST METHOD
-   /* public static void main(String[] args) {
-        try (Connection conn = getConnection()) {
-            if (conn != null) {
-                System.out.println("✅ Connection successful!");
-            }
-        } catch (SQLException e) {
-            System.out.println("❌ Connection failed: " + e.getMessage());
-        }
-    } */
+//   public static void main(String[] args) {
+//        try (Connection conn = getConnection()) {
+//            if (conn != null) {
+//                System.out.println("✅ Connection successful!");
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("❌ Connection failed: " + e.getMessage());
+//        }
+//    }
 }

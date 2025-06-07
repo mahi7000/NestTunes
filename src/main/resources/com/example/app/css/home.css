@@ -60,3 +60,111 @@
 .play-button:pressed {
     -fx-background-color: #ff9eaf;
 }
+
+
+/* ScrollPane Styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Scroll Bars */
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #ffcdd8;
+    -fx-background-radius: 1em;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+/* Style the scroll bar track */
+.scroll-pane > .scroll-bar:vertical > .track,
+.scroll-pane > .scroll-bar:horizontal > .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+
+/* Style the vertical scroll bar thumb */
+.scroll-pane > .scroll-bar:vertical > .thumb {
+    -fx-background-color: #ffcdd8;
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 1em;
+}
+
+/* Style the horizontal scroll bar thumb */
+.scroll-pane > .scroll-bar:horizontal > .thumb {
+    -fx-background-color: #ffcdd8;
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 1em;
+}
+
+/* Style the scroll bar buttons (arrows) */
+.scroll-pane > .scroll-bar > .increment-button,
+.scroll-pane > .scroll-bar > .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Style the scroll bar corner */
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
+/* Optional: Hover effect for scroll bar thumb */
+.scroll-pane > .scroll-bar > .thumb:hover {
+    -fx-background-color: derive(#d81b60, -10%);
+}
+
+/* Optional: Pressed effect for scroll bar thumb */
+.scroll-pane > .scroll-bar > .thumb:pressed {
+    -fx-background-color: derive(#d81b60, -20%);
+}
+
+
+/* Pagination */
+.pagination-container {
+    -fx-spacing: 15px;
+    -fx-alignment: center;
+}
+
+.page-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #d81b60;
+    -fx-font-weight: bold;
+}
+
+.pagination-button {
+    -fx-background-radius: 17px;
+    -fx-background-color: #ffcdd8;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 15px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.1), 3, 0.0, 1, 1);
+}
+
+.pagination-button:hover {
+    -fx-background-color: #ffb6c1;
+}
+
+.pagination-button:pressed {
+    -fx-background-color: #ff9eaf;
+}
+
+.pagination-button:disabled {
+    -fx-opacity: 0.6;
+    -fx-background-color: #ffcdd8;
+}
