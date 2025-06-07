@@ -1,48 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.control.*?>
+<?import javafx.fxml.FXMLLoader?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.app.controllers.NavigationController"
-            stylesheets="@../css/main.css">
-
-    <!-- Main Content Area -->
-    <StackPane fx:id="contentPane" styleClass="content-pane"
-               AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-               AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" />
-
-    <!-- Wrapper HBox centers navBarInner horizontally -->
-    <HBox alignment="center" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-        <HBox fx:id="bottomNav" styleClass="bottom-nav" spacing="20" alignment="center">
-            <!-- Buttons -->
-            <Button styleClass="nav-button" onAction="#navigateToHome">
-                <graphic><FontIcon iconLiteral="fas-home" iconSize="20"/></graphic>
-                <tooltip><Tooltip text="Home"/></tooltip>
-            </Button>
-
-            <Button styleClass="nav-button" onAction="#navigateToExplore">
-                <graphic><FontIcon iconLiteral="fas-search" iconSize="20"/></graphic>
-                <tooltip><Tooltip text="Explore"/></tooltip>
-            </Button>
-
-            <Button styleClass="nav-button" onAction="#navigateToNowPlaying">
-                <graphic><FontIcon iconLiteral="fas-music" iconSize="20"/></graphic>
-                <tooltip><Tooltip text="Now Playing"/></tooltip>
-            </Button>
-
-            <Button styleClass="nav-button" onAction="#navigateToProfile">
-                <graphic><FontIcon iconLiteral="fas-user" iconSize="20"/></graphic>
-                <tooltip><Tooltip text="Profile"/></tooltip>
-            </Button>
-
-            <ToggleButton fx:id="themeToggle" styleClass="nav-button">
-                <graphic><FontIcon fx:id="themeIcon" iconLiteral="fas-moon" iconSize="18"/></graphic>
-                <tooltip><Tooltip text="Toggle Theme"/></tooltip>
-            </ToggleButton>
-        </HBox>
-    </HBox>
-</AnchorPane>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.app.controllers.MainController"
+            stylesheets="@../styles/navbar.css">
+    
+    <!-- Left side navigation -->
+    <left>
+        <fx:include source="navbar.fxml"/>
+    </left>
+    
+    <!-- Main content area -->
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-background-color: #121212;"/>
+    </center>
+    
+    <!-- Bottom player controls -->
+    <bottom>
+        <VBox style="-fx-background-color: #181818; -fx-padding: 10;">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <!-- Now playing info -->
+                <Label fx:id="nowPlayingLabel" style="-fx-text-fill: white;"/>
+                
+                <Region HBox.hgrow="ALWAYS"/>
+                
+                <!-- Player controls -->
+                <Button fx:id="previousButton" styleClass="player-button"/>
+                <Button fx:id="playPauseButton" styleClass="player-button"/>
+                <Button fx:id="nextButton" styleClass="player-button"/>
+                
+                <!-- Volume control -->
+                <Slider fx:id="volumeSlider" prefWidth="100"/>
+            </HBox>
+            
+            <!-- Progress bar -->
+            <Slider fx:id="progressSlider" styleClass="progress-slider"/>
+        </VBox>
+    </bottom>
+</BorderPane>

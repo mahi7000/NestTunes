@@ -43,11 +43,19 @@ public class HomeController {
     private final int RECENT_PAGE_SIZE = 6;
 
     @FXML
+    private VBox recentlyPlayedContainer;
+    
+    @FXML
+    private VBox playlistsContainer;
+
+    @FXML
     public void initialize() {
         loadAllSongs();
         loadAllRecentSongs();
         updateLibraryPagination();
         updateRecentPagination();
+        // TODO: Load recently played tracks and playlists
+        // This will be implemented when we have the database and music player functionality
     }
 
     private void loadAllSongs() {

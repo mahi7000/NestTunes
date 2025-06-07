@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.app.controllers.NavBarController"
+      styleClass="nav-bar"
+      prefWidth="200"
+      style="-fx-background-color: #1a1a1a;">
+    
+    <padding>
+        <Insets top="20" right="10" bottom="20" left="10"/>
+    </padding>
+    
+    <!-- User Profile Section -->
+    <VBox styleClass="user-profile" spacing="10">
+        <Label fx:id="usernameLabel" styleClass="username-label" style="-fx-text-fill: white; -fx-font-size: 16px;"/>
+    </VBox>
+    
+    <Separator style="-fx-background-color: #333333;"/>
+    
+    <!-- Navigation Buttons -->
+    <VBox spacing="10" styleClass="nav-buttons">
+        <Button fx:id="homeButton" 
+                onAction="#onHomeClick"
+                styleClass="nav-button"
+                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 10;"/>
+        
+        <Button fx:id="libraryButton"
+                onAction="#onLibraryClick"
+                styleClass="nav-button"
+                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 10;"/>
+        
+        <Button fx:id="playlistsButton"
+                onAction="#onPlaylistsClick"
+                styleClass="nav-button"
+                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 10;"/>
+        
+        <Button fx:id="searchButton"
+                onAction="#onSearchClick"
+                styleClass="nav-button"
+                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 10;"/>
+    </VBox>
+    
+    <VBox VBox.vgrow="ALWAYS"/>
+    
+    <!-- Profile Button at Bottom -->
+    <Button fx:id="profileButton"
+            onAction="#onProfileClick"
+            styleClass="nav-button"
+            style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 10;"/>
+</VBox> 

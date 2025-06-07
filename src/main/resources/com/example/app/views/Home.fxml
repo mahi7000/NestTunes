@@ -1,80 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<ScrollPane fitToWidth="true" hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.app.controllers.HomeController"
-            stylesheets="@../css/home.css">
-    <content>
-        <VBox styleClass="home-container" spacing="20">
-            <!-- Your Library Section -->
-            <VBox spacing="10">
-                <Label text="Your Library" styleClass="section-title"/>
-
-                <GridPane fx:id="librarySongsContainer" styleClass="songs-grid" hgap="20" vgap="10">
-                    <rowConstraints>
-                        <RowConstraints percentHeight="50"/>
-                        <RowConstraints percentHeight="50"/>
-                    </rowConstraints>
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="30"/>
-                        <ColumnConstraints percentWidth="30"/>
-                        <ColumnConstraints percentWidth="30"/>
-                    </columnConstraints>
-                </GridPane>
-
-                <HBox alignment="CENTER" spacing="10" styleClass="pagination-container">
-                    <Button fx:id="libraryPrevBtn" text="" styleClass="pagination-button"
-                            onAction="#previousLibraryPage">
-                        <graphic>
-                            <FontIcon iconLiteral="fas-angle-left" iconSize="16" styleClass="play-icon"/>
-                        </graphic>
-                    </Button>
-                    <Label fx:id="libraryPageLabel" text="Page 1" styleClass="page-info"/>
-                    <Button fx:id="libraryNextBtn" text="" styleClass="pagination-button"
-                            onAction="#nextLibraryPage">
-                        <graphic>
-                            <FontIcon iconLiteral="fas-angle-right" iconSize="16" styleClass="play-icon"/>
-                        </graphic>
-                    </Button>
-                </HBox>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      spacing="20"
+      style="-fx-background-color: #121212; -fx-padding: 20;">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Welcome Section -->
+    <VBox spacing="10">
+        <Label text="Welcome to NestTunes" 
+               style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <Label text="Your personal music streaming platform" 
+               style="-fx-text-fill: #b3b3b3; -fx-font-size: 16px;"/>
+    </VBox>
+    
+    <!-- Recently Played Section -->
+    <VBox spacing="10">
+        <Label text="Recently Played" 
+               style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <HBox spacing="20" style="-fx-padding: 10;">
+                <!-- Placeholder for recently played tracks -->
+                <Label text="No recent tracks" 
+                       style="-fx-text-fill: #b3b3b3; -fx-font-size: 14px;"/>
+            </HBox>
+        </ScrollPane>
+    </VBox>
+    
+    <!-- Your Playlists Section -->
+    <VBox spacing="10">
+        <Label text="Your Playlists" 
+               style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <!-- Placeholder for playlists -->
+                <Label text="No playlists yet" 
+                       style="-fx-text-fill: #b3b3b3; -fx-font-size: 14px;"/>
             </VBox>
-
-            <!-- Recently Played Section -->
-            <VBox spacing="10">
-                <Label text="Recently Played" styleClass="section-title"/>
-
-                <GridPane fx:id="recentSongsContainer" styleClass="songs-grid" hgap="20" vgap="10">
-                    <rowConstraints>
-                        <RowConstraints percentHeight="50"/>
-                        <RowConstraints percentHeight="50"/>
-                    </rowConstraints>
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="30"/>
-                        <ColumnConstraints percentWidth="30"/>
-                        <ColumnConstraints percentWidth="30"/>
-                    </columnConstraints>
-                </GridPane>
-
-                <HBox alignment="CENTER" spacing="10" styleClass="pagination-container">
-                    <Button fx:id="recentPrevBtn" text="" styleClass="pagination-button"
-                            onAction="#previousRecentPage">
-                        <graphic>
-                            <FontIcon iconLiteral="fas-angle-left" iconSize="16" styleClass="play-icon"/>
-                        </graphic>
-                    </Button>
-                    <Label fx:id="recentPageLabel" text="Page 1" styleClass="page-info"/>
-                    <Button fx:id="recentNextBtn" text="" styleClass="pagination-button"
-                            onAction="#nextRecentPage">
-                        <graphic>
-                            <FontIcon iconLiteral="fas-angle-right" iconSize="16" styleClass="play-icon"/>
-                        </graphic>
-                    </Button>
-                </HBox>
-            </VBox>
-        </VBox>
-    </content>
-</ScrollPane>
+        </ScrollPane>
+    </VBox>
+</VBox>

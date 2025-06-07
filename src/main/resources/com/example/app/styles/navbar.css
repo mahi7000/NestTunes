@@ -1,0 +1,38 @@
+.nav-bar {
+    -fx-background-color: #1a1a1a;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: #2c2c2c;
+    -fx-text-fill: #1DB954;
+}
+
+.nav-button .ikonli-font-icon {
+    -fx-fill: white;
+    -fx-icon-size: 20px;
+}
+
+.nav-button:hover .ikonli-font-icon {
+    -fx-fill: #1DB954;
+}
+
+.username-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.user-profile {
+    -fx-padding: 10;
+    -fx-alignment: CENTER_LEFT;
+} 
