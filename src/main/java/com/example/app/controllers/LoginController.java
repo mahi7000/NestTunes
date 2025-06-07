@@ -83,7 +83,7 @@ public class LoginController {
 
                 if (PasswordUtils.checkPassword(password, hashedPassword)) {
                     System.out.println("Login successful!");
-                    redirectToProfile();
+                    redirectToProfile(username);
                 } else {
                     System.out.println("Incorrect password!");
                 }
@@ -186,5 +186,25 @@ public class LoginController {
             button.getStyleClass().add("inactive-toggle");
         }
     }
+
+    private void redirectToProfile(String username) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/app/views/profile.fxml"));
+            Parent root = loader.load();
+    
+            // Access the ProfileController and pass the username
+            ProfileController controller = loader.getController();
+            controller.setUserData(username);  // We'll define this method in ProfileController
+    
+            // Open profile scene
+            Stage stage = (Stage) loginForm.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Failed to load profile page: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
 
 }
