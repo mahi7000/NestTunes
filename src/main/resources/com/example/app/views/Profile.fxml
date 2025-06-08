@@ -15,7 +15,7 @@
                         <StackPane>
                             <children>
                                 <Circle radius="80.0" fill="#ffcdd8" stroke="#ffcdd8" strokeType="INSIDE" />
-                                <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
                                         <Image url="@../images/music_icon.jpg" />
                                     </image>

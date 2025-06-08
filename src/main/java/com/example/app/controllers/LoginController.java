@@ -191,11 +191,11 @@ public class LoginController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/app/views/profile.fxml"));
             Parent root = loader.load();
-    
+
             // Access the ProfileController and pass the username
             ProfileController controller = loader.getController();
             controller.setUserData(username);  // We'll define this method in ProfileController
-    
+
             // Open profile scene
             Stage stage = (Stage) loginForm.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -205,6 +205,4 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-    
-
 }

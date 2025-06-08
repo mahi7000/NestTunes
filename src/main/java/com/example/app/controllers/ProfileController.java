@@ -145,21 +145,24 @@ private void changeProfilePicture() {
             File destFile = new File(imagesDir, uniqueFileName);
             Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-            // Load and display the selected image in ImageView
             Image image = new Image(destFile.toURI().toString(), false);
-            profilePicture.setImage(image);
+            if (image.isError()) {
+                System.out.println("Image failed to load: " + image.getException());
+            } else {
+                profilePicture.setImage(image);
+            }
 
             // 🔽 Apply circular clipping and styling
-            profilePicture.setFitWidth(100);
-            profilePicture.setFitHeight(100);
+            // Apply circular clipping
+            double radius = 75;
+            profilePicture.setFitWidth(radius * 2);
+            profilePicture.setFitHeight(radius * 2);
             profilePicture.setPreserveRatio(false);
             profilePicture.setSmooth(true);
-            Circle clip = new Circle(50, 50, 50); // x, y, radius = width/2
-            //profilePicture.setClip(clip);
-            clip.setStroke(Color.RED);  // For debugging
-    clip.setStrokeWidth(2);
-    clip.setFill(Color.TRANSPARENT);
-    profilePicture.setClip(clip);
+
+            Circle clip = new Circle(radius, radius, radius);
+            profilePicture.setClip(clip);
+
 
             // Save the image filename to the database
             saveProfilePicPathToDatabase(uniqueFileName);

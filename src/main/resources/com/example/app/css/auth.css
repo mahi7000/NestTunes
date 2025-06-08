@@ -1,4 +1,8 @@
 /* Base Styles */
+.anchor {
+    -fx-background-color: white;
+}
+
 .auth-container {
     -fx-background-color: #ffffff;
     -fx-background-radius: 30px;
