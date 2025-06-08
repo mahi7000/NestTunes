@@ -3,6 +3,7 @@ package com.example.app.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -31,6 +32,8 @@ public class NavigationController {
     private String currentPage = "";
 
     private final Map<String, Node> screens = new HashMap<>();
+    private final String LIGHT_THEME = getClass().getResource("/com/example/app/css/styles.css").toExternalForm();
+    private final String DARK_THEME = getClass().getResource("/com/example/app/css/dark_theme.css").toExternalForm();
 
     @FXML
     public void initialize() {
@@ -168,14 +171,18 @@ public class NavigationController {
         });
     }
 
+    private void applyTheme(String css) {
+        Scene scene = contentPane.getScene();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(css);
+    }
+
     private void setDarkTheme() {
-        contentPane.getScene().getRoot().setStyle("-fx-base: #2b2b2b;");
-        sideNav.setStyle("-fx-background-color: #3c3c3c; -fx-border-color: #4d4d4d;");
+        applyTheme(DARK_THEME);
     }
 
     private void setLightTheme() {
-        contentPane.getScene().getRoot().setStyle("-fx-base: #f5f5f5;");
-        sideNav.setStyle("-fx-background-color: white; -fx-border-color: #e0e0e0;");
+        applyTheme(LIGHT_THEME);
     }
 
     public StackPane getContentPane() {

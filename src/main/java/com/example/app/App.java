@@ -14,14 +14,14 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Load main layout which contains the navigation system
-        FXMLLoader mainLoader = new FXMLLoader(App.class.getResource("/com/example/app/views/Login.fxml"));
+        FXMLLoader mainLoader = new FXMLLoader(App.class.getResource("/com/example/app/views/Main.fxml"));
         Parent root = mainLoader.load();
 
         // Store the NavigationController reference in the root
-//        NavigationController navController = mainLoader.getController();
-//        root.getProperties().put("controller", navController);
+        NavigationController navController = mainLoader.getController();
+        root.getProperties().put("controller", navController);
 
-        LoginController controller = mainLoader.getController();
+//        LoginController controller = mainLoader.getController();
 
         Scene scene = new Scene(root, 800, 600);
 

@@ -1,6 +1,5 @@
 /* Custom Window Frame Styling */
 .root {
-    -fx-background-color: transparent;
 }
 
 .window-frame {

@@ -20,7 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Stack;
 
 
 public class ProfileController {
@@ -220,10 +220,15 @@ private void changeProfilePicture() {
         ListView<String> listView = new ListView<>();
         listView.getItems().setAll(users);
 
+        StackPane root = new StackPane(listView);
+        Scene scene = new Scene(root, 200, 300);
+
+        scene.getStylesheets().add(getClass().getResource("/com/example/app/css/profile.css").toExternalForm());
+
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(title);
-        stage.setScene(new Scene(new StackPane(listView), 200, 300));
+        stage.setScene(scene);
         stage.show();
     }
 
