@@ -1,10 +1,13 @@
 package com.example.app.controllers;
 
+import com.example.app.database.DatabaseManager;
+import com.example.app.models.Song;
 import javafx.beans.property.*;
 import javafx.collections.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -24,18 +27,21 @@ public class ExploreController {
     private final BooleanProperty canGoPrevious = new SimpleBooleanProperty(false);
     private final BooleanProperty canGoNext = new SimpleBooleanProperty(true);
 
+    // Reference to your media manager
+    private final MediaManager mediaManager = MediaManager.getInstance();
+
     @FXML
     public void initialize() {
-        loadSampleSongs();
+        loadSongsFromDatabase();  // Changed from loadSampleSongs()
         setupSearch();
         setupListView();
         setupPagination();
     }
 
-    private void loadSampleSongs() {
-        for (int i = 1; i <= 50; i++) {
-            allSongs.add(new Song("Song " + i, "Artist " + (i % 5 + 1)));
-        }
+    private void loadSongsFromDatabase() {
+        // Replace with your actual database loading logic
+        DatabaseManager dbManager = new DatabaseManager();
+        allSongs.setAll(dbManager.getAllSongs());
         filteredSongs.setAll(allSongs);
     }
 
@@ -69,6 +75,13 @@ public class ExploreController {
                 root.setAlignment(Pos.CENTER_LEFT);
                 root.getStyleClass().add("song-item");
                 root.setSpacing(10);
+
+                // Add click handler for the entire row
+                root.setOnMouseClicked(e -> {
+                    if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 1) {
+                        handlePlay(getItem());
+                    }
+                });
             }
 
             @Override
@@ -131,7 +144,17 @@ public class ExploreController {
 
     @FXML
     private void handlePlay(Song song) {
-        System.out.println("Playing: " + song.getTitle() + " by " + song.getArtist());
+        if (song != null) {
+            // Play the song using your media manager
+            mediaManager.playSong(song);
+
+            // If you need to navigate to NowPlaying view:
+            NavigationController navController = (NavigationController)
+                    songsListView.getScene().getRoot().getProperties().get("controller");
+            if (navController != null) {
+                navController.playSongAndNavigate(song);
+            }
+        }
     }
 
     @FXML
@@ -146,18 +169,5 @@ public class ExploreController {
         if (canGoNext.get()) {
             currentPage.set(currentPage.get() + 1);
         }
-    }
-
-    public static class Song {
-        private final String title;
-        private final String artist;
-
-        public Song(String title, String artist) {
-            this.title = title;
-            this.artist = artist;
-        }
-
-        public String getTitle() { return title; }
-        public String getArtist() { return artist; }
     }
 }
