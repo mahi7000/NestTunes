@@ -1,5 +1,6 @@
 package com.example.app.controllers;
 
+import com.example.app.models.Song;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -20,6 +21,10 @@ public class MediaManager {
         return instance;
     }
 
+    public boolean isPlaying() {
+        return mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
+    }
+
     public void playSong(Song song) {
         stopCurrentMedia();
 
@@ -31,11 +36,10 @@ public class MediaManager {
 
     public void togglePlayPause() {
         if (mediaPlayer != null) {
-            MediaPlayer.Status status = mediaPlayer.getStatus();
-            if (status == MediaPlayer.Status.PLAYING) {
-                mediaPlayer.pause();
-            } else {
-                mediaPlayer.play();
+            if (isPlaying()) {  // If currently playing
+                mediaPlayer.pause();  // Pause it
+            } else {  // If paused or stopped
+                mediaPlayer.play();  // Play it
             }
         }
     }

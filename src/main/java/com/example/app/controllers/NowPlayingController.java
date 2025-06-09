@@ -1,5 +1,6 @@
 package com.example.app.controllers;
 
+import com.example.app.models.Song;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,6 +58,7 @@ public class NowPlayingController {
 
         // Update media manager with new song
         mediaManager.playSong(song);
+        updatePlayPauseIcon();  // Update the icon immediately
 
         // Setup new listeners for the new media player
         setupMediaListeners();
@@ -65,8 +67,7 @@ public class NowPlayingController {
         updateUI();
 
         // Start animations if playing
-        if (mediaManager.getMediaPlayer() != null &&
-                mediaManager.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
+        if (mediaManager.isPlaying()) {
             rotateTransition.play();
             startProgressTimer();
         }
@@ -79,15 +80,12 @@ public class NowPlayingController {
             authorName.setText(song.getArtist());
 
             try {
-                Image image = new Image(new File(song.getImagePath()).toURI().toString());
-                albumArt.setImage(image);
+                albumArt.setImage(new Image(new File(song.getImagePath()).toURI().toString()));
             } catch (Exception e) {
                 albumArt.setImage(new Image(getClass().getResourceAsStream("/images/default_album.png")));
             }
 
-            playIcon.setIconLiteral(mediaManager.getMediaPlayer() != null &&
-                    mediaManager.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING ?
-                    "fas-pause" : "fas-play");
+            playIcon.setIconLiteral(mediaManager.isPlaying() ? "fas-pause" : "fas-play");
         }
     }
 
@@ -108,35 +106,24 @@ public class NowPlayingController {
     private void setupMediaListeners() {
         MediaPlayer player = mediaManager.getMediaPlayer();
         if (player != null) {
-            // Clear existing listeners to avoid duplicates
-            player.setOnReady(null);
-            player.setOnEndOfMedia(null);
-
-            player.setOnReady(() -> {
-                totalTimeLabel.setText(formatTime(mediaManager.getTotalDuration().toSeconds()));
-                playingSlider.setMax(mediaManager.getTotalDuration().toSeconds());
-                playingSlider.setValue(0);
-                currentTimeLabel.setText("00:00");
-            });
-
-            player.setOnEndOfMedia(() -> {
-                playIcon.setIconLiteral("fas-play");
-                rotateTransition.pause();
-                stopProgressTimer();
-                playingSlider.setValue(0);
-                currentTimeLabel.setText("00:00");
-            });
-
             player.setOnPlaying(() -> {
-                playIcon.setIconLiteral("fas-pause");
+                updatePlayPauseIcon();  // Update icon when playback starts
                 rotateTransition.play();
                 startProgressTimer();
             });
 
             player.setOnPaused(() -> {
-                playIcon.setIconLiteral("fas-play");
+                updatePlayPauseIcon();  // Update icon when paused
                 rotateTransition.pause();
                 stopProgressTimer();
+            });
+
+            player.setOnEndOfMedia(() -> {
+                updatePlayPauseIcon();  // Update icon when song ends
+                rotateTransition.pause();
+                stopProgressTimer();
+                playingSlider.setValue(0);
+                currentTimeLabel.setText("00:00");
             });
         }
     }
@@ -144,17 +131,16 @@ public class NowPlayingController {
     private void setupPlayButton() {
         playButton.setOnAction(event -> {
             mediaManager.togglePlayPause();
-            MediaPlayer.Status status = mediaManager.getMediaPlayer().getStatus();
-            playIcon.setIconLiteral(status == MediaPlayer.Status.PLAYING ? "fas-pause" : "fas-play");
-
-            if (status == MediaPlayer.Status.PLAYING) {
-                rotateTransition.play();
-                startProgressTimer();
-            } else {
-                rotateTransition.pause();
-                stopProgressTimer();
-            }
+            updatePlayPauseIcon();  // Call a dedicated method to update the icon
         });
+    }
+
+    private void updatePlayPauseIcon() {
+        if (mediaManager.isPlaying()) {
+            playIcon.setIconLiteral("fas-pause");  // Show pause icon when playing
+        } else {
+            playIcon.setIconLiteral("fas-play");   // Show play icon when paused/stopped
+        }
     }
 
     private void setupLikeButton() {

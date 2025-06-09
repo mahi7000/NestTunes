@@ -1,6 +1,7 @@
 package com.example.app.controllers;
 
 
+import com.example.app.App;
 import com.example.app.utils.DatabaseConnection;
 import com.example.app.utils.PasswordUtils;
 
@@ -33,6 +34,8 @@ public class LoginController {
     @FXML private PasswordField signupPasswordField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private Button googleLoginBtn;
+
+    private App mainApp;
 
 
     @FXML
@@ -187,22 +190,17 @@ public class LoginController {
         }
     }
 
+    public void setMainApp(App app) {
+        this.mainApp = app;
+    }
+
     private void redirectToProfile(String username) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/app/views/profile.fxml"));
-            Parent root = loader.load();
-
-            // Access the ProfileController and pass the username
-            ProfileController controller = loader.getController();
-            controller.setUserData(username);  // We'll define this method in ProfileController
-
-            // Open profile scene
-            Stage stage = (Stage) loginForm.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+            mainApp.showMainApplication(username);
         } catch (IOException e) {
-            System.err.println("Failed to load profile page: " + e.getMessage());
+            System.err.println("Failed to load main application: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 }

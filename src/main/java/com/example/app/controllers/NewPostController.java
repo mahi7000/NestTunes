@@ -1,4 +1,5 @@
 package com.example.app.controllers;
+import com.example.app.utils.DatabaseConnection;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,6 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.function.Consumer;
 
 public class NewPostController {
@@ -64,36 +68,54 @@ public class NewPostController {
         }
 
         try {
-            // Create directories if they don't exist
+            // Create folders if not exist
             File imagesDir = new File("src/main/resources/com/example/app/images");
             File soundsDir = new File("src/main/resources/com/example/app/sounds");
-            if (!imagesDir.exists()) imagesDir.mkdir();
-            if (!soundsDir.exists()) soundsDir.mkdir();
+            if (!imagesDir.exists()) imagesDir.mkdirs();
+            if (!soundsDir.exists()) soundsDir.mkdirs();
 
-            // Copy files to application directories
+            // Unique filenames
             String imageName = "cover_" + System.currentTimeMillis() + getFileExtension(imageFile.getName());
             String audioName = "track_" + System.currentTimeMillis() + getFileExtension(audioFile.getName());
 
-            File destImage = new File("src/main/resources/com/example/app/images/" + imageName);
-            File destAudio = new File("src/main/resources/com/example/app/sounds/" + audioName);
+            File destImage = new File(imagesDir, imageName);
+            File destAudio = new File(soundsDir, audioName);
 
             Files.copy(imageFile.toPath(), destImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(audioFile.toPath(), destAudio.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-            // Format: "Song Title - Artist Name"
-            String postTitle = songTitleField.getText() + " - " + artistNameField.getText();
-            postHandler.accept(postTitle);
+            // Save to DB
+            try (Connection conn = DatabaseConnection.getConnection()) {
+                String sql = "INSERT INTO posts (user_id, song_title, artist_name, album_picture, song_file) VALUES (?, ?, ?, ?, ?)";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, getCurrentUserId()); // replace with actual user ID logic
+                stmt.setString(2, songTitleField.getText());
+                stmt.setString(3, artistNameField.getText());
+                stmt.setString(4, "src/main/resources/com/example/app/images/" + imageName);
+                stmt.setString(5, "src/main/resources/com/example/app/sounds/" + audioName);
+                stmt.executeUpdate();
+            }
 
-            // Close the window
+
+
+            postHandler.accept(songTitleField.getText() + " - " + artistNameField.getText());
             ((Stage) songTitleField.getScene().getWindow()).close();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Could not save post");
+            showAlert("Error", "Could not save files");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Database Error", "Failed to save post in database");
         }
     }
 
     private String getFileExtension(String filename) {
         return filename.substring(filename.lastIndexOf("."));
+    }
+
+    private int getCurrentUserId() {
+        // TODO: Replace with session-based logged-in user ID
+        return 1;
     }
 
     private void showAlert(String title, String message) {

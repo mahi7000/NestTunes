@@ -1,5 +1,6 @@
 package com.example.app.controllers;
 
+import com.example.app.models.Song;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.example.app.database.DatabaseManager;
 
 public class HomeController {
     private static final String MUSIC_FOLDER = "C:\\Users\\HP\\Documents\\Education\\Year 3\\Semester 2\\Advanced Programming\\Code\\app\\src\\main\\resources\\com\\example\\app\\sounds";
@@ -43,13 +45,18 @@ public class HomeController {
     private List<Song> allRecentSongs = new ArrayList<>();
     private int currentRecentPage = 0;
     private final int RECENT_PAGE_SIZE = 6;
+    private final DatabaseManager dbManager = new DatabaseManager();
 
     @FXML
     public void initialize() {
-        loadAllSongs();
-        loadAllRecentSongs();
+        loadSongsFromDatabase();
         updateLibraryPagination();
         updateRecentPagination();
+    }
+
+    private void loadSongsFromDatabase() {
+        allLibrarySongs = dbManager.getAllSongs();
+        allRecentSongs = dbManager.getRecentSongs(10); // Get 7 most recent songs
     }
 
     private void loadAllSongs() {
@@ -148,15 +155,17 @@ public class HomeController {
     }
 
     private void playSong(Song song) {
-        // Get the NavigationController from the scene
-        StackPane contentPane = (StackPane) librarySongsContainer.getScene().lookup("#contentPane");
-        if (contentPane != null) {
-            NavigationController navController = (NavigationController)
-                    contentPane.getScene().getRoot().getProperties().get("controller");
+        // Get the root node from any component in the scene
+        Node node = librarySongsContainer; // or recentSongsContainer
+        Scene scene = node.getScene();
 
-            if (navController != null) {
-                navController.playSong(song);
-            }
+        // Look for the navigation controller in the scene
+        NavigationController navController = (NavigationController) scene.getRoot().getProperties().get("controller");
+
+        if (navController != null) {
+            navController.playSongAndNavigate(song);
+        } else {
+            System.err.println("NavigationController not found!");
         }
     }
 
@@ -212,28 +221,4 @@ public class HomeController {
         recentPrevBtn.setDisable(currentRecentPage == 0);
         recentNextBtn.setDisable((currentRecentPage + 1) * RECENT_PAGE_SIZE >= allRecentSongs.size());
     }
-}
-
-class Song {
-    private final String title;
-    private final String artist;
-    private final String imagePath;
-    private final String filePath; // Add this for actual song file
-
-    public Song(String title, String artist, String imagePath) {
-        this(title, artist, imagePath, null);
-    }
-
-    public Song(String title, String artist, String imagePath, String filePath) {
-        this.title = title;
-        this.artist = artist;
-        this.imagePath = imagePath;
-        this.filePath = filePath;
-    }
-
-    // Getters
-    public String getTitle() { return title; }
-    public String getArtist() { return artist; }
-    public String getImagePath() { return imagePath; }
-    public String getFilePath() { return filePath; }
 }

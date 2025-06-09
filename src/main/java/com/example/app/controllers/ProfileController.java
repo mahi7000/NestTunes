@@ -192,7 +192,7 @@ private void changeProfilePicture() {
         followingButton.setOnAction(e -> showUserList("Following", following));
     }
 
-   
+
 
     @FXML
     private void createNewPost() {
@@ -235,7 +235,7 @@ private void changeProfilePicture() {
         stage.show();
     }
 
-    private void showAlert(String title, String message) {
+        private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);

@@ -11,27 +11,54 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class App extends Application {
+    private Stage primaryStage;
+    private NavigationController navController;
+
     @Override
     public void start(Stage stage) throws IOException {
-        // Load main layout which contains the navigation system
-        FXMLLoader mainLoader = new FXMLLoader(App.class.getResource("/com/example/app/views/Main.fxml"));
-        Parent root = mainLoader.load();
+        this.primaryStage = stage;
+        showLoginView(); // Start with login view
+    }
 
-        // Store the NavigationController reference in the root
-        NavigationController navController = mainLoader.getController();
-        root.getProperties().put("controller", navController);
+    public void showLoginView() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/app/views/login.fxml"));
+        Parent root = loader.load();
 
-//        LoginController controller = mainLoader.getController();
+        // Pass reference to app to login controller
+        LoginController loginController = loader.getController();
+        loginController.setMainApp(this);
 
         Scene scene = new Scene(root, 800, 600);
-
-        // Add CSS
-        String cssPath = App.class.getResource("/com/example/app/css/styles.css").toExternalForm();
+        String cssPath = getClass().getResource("/com/example/app/css/styles.css").toExternalForm();
         scene.getStylesheets().add(cssPath);
 
-        stage.setTitle("NestTunes");
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setTitle("NestTunes - Login");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void showMainApplication(String username) throws IOException {
+        // Load main layout
+        FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/com/example/app/views/Main.fxml"));
+        Parent root = mainLoader.load();
+
+        // Get navigation controller
+        navController = mainLoader.getController();
+        root.getProperties().put("controller", navController);
+
+        navController.setLoggedInUsername(username);
+
+        // Set up main scene
+        Scene scene = new Scene(root, 800, 600);
+        String cssPath = getClass().getResource("/com/example/app/css/styles.css").toExternalForm();
+        scene.getStylesheets().add(cssPath);
+
+        primaryStage.setTitle("NestTunes");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        // Navigate to profile with username
+        navController.navigateToProfileWithUser(username);
     }
 
     public static void main(String[] args) {

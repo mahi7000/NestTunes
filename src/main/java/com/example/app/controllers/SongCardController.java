@@ -1,5 +1,6 @@
 package com.example.app.controllers;
 
+import com.example.app.models.Song;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,27 +21,19 @@ public class SongCardController {
     private Song song;
     private Runnable playAction;
 
-    /**
-     * Original method - maintains backward compatibility
-     */
+    // Method 1: For backward compatibility
     public void setSongData(String title, String artist, String imagePath) {
         this.song = new Song(title, artist, imagePath);
         updateUI();
-        setupClickHandler();
-
-        playButton.setOnAction(e -> {
-            playAction.run(); // This should call the fixed playSong method
-        });
+        setupClickHandlers();
     }
 
-    /**
-     * New method - supports play action callback
-     */
+    // Method 2: Preferred method with Song object and play action
     public void setSongData(Song song, Runnable playAction) {
         this.song = song;
         this.playAction = playAction;
         updateUI();
-        setupClickHandler();
+        setupClickHandlers();
     }
 
     private void updateUI() {
@@ -57,7 +50,6 @@ public class SongCardController {
                     return;
                 }
             }
-            // Fallback to default image if specified path is invalid
             albumArt.setImage(loadDefaultImage());
         } catch (Exception e) {
             System.err.println("Error loading image: " + e.getMessage());
@@ -67,15 +59,27 @@ public class SongCardController {
 
     private Image loadDefaultImage() {
         try {
-            return new Image(getClass().getResourceAsStream("/com/example/music/images/music_icon.jpg"));
+            return new Image(getClass().getResourceAsStream("/com/example/app/images/music_icon.jpg"));
         } catch (Exception e) {
             System.err.println("Error loading default image: " + e.getMessage());
             return null;
         }
     }
 
-    private void setupClickHandler() {
-        root.setOnMouseClicked(this::handleCardClick);
+    private void setupClickHandlers() {
+        // Handle click on the entire card
+        root.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1 && playAction != null) {
+                playAction.run();
+            }
+        });
+
+        // Handle click on the play button specifically
+        playButton.setOnAction(event -> {
+            if (playAction != null) {
+                playAction.run();
+            }
+        });
     }
 
     @FXML
@@ -95,7 +99,6 @@ public class SongCardController {
         }
     }
 
-    // Helper method to get the current song
     public Song getSong() {
         return song;
     }

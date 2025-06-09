@@ -1,5 +1,6 @@
 package com.example.app.controllers;
 
+import com.example.app.models.Song;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -34,6 +35,7 @@ public class NavigationController {
     private final Map<String, Node> screens = new HashMap<>();
     private final String LIGHT_THEME = getClass().getResource("/com/example/app/css/styles.css").toExternalForm();
     private final String DARK_THEME = getClass().getResource("/com/example/app/css/dark_theme.css").toExternalForm();
+    private String loggedInUsername;
 
     @FXML
     public void initialize() {
@@ -79,6 +81,8 @@ public class NavigationController {
             if (!screens.containsKey(fxmlPath)) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
                 screen = loader.load();
+
+                screen.getProperties().put("controller", loader.getController());
 
                 if (fxmlPath.equals("/com/example/app/views/NowPlaying.fxml")) {
                     nowPlayingController = loader.getController();
@@ -139,12 +143,38 @@ public class NavigationController {
         }
     }
 
+    public void playSongAndNavigate(Song song) {
+        this.currentSong = song;
+        MediaManager.getInstance().playSong(song);
+
+        // Update floating player
+        if (floatingPlayerController != null) {
+            floatingPlayerController.setVisible(true);
+            floatingPlayerController.setPlaying(true);
+            floatingPlayerController.setAlbumArt(song.getImagePath());
+        }
+
+        // Load and update Now Playing page
+        navigateToNowPlaying();
+
+        // Force update the NowPlayingController if it exists
+        if (nowPlayingController != null) {
+            nowPlayingController.setSong(song);
+        }
+    }
+
+    // Modify the existing navigateToNowPlaying method
     @FXML
     private void navigateToNowPlaying() {
-        if (!"nowPlaying".equals(currentPage)) {
-            setScreen("/com/example/app/views/NowPlaying.fxml");
-            updateActiveButton("nowPlaying");
+        setScreen("/com/example/app/views/NowPlaying.fxml");
+        updateActiveButton("nowPlaying");
+
+        // Update the now playing controller with current song
+        if (nowPlayingController != null && currentSong != null) {
+            nowPlayingController.setSong(currentSong);
         }
+
+        // Hide floating player when on Now Playing page
         if (floatingPlayerController != null) {
             floatingPlayerController.setVisible(false);
         }
@@ -154,8 +184,37 @@ public class NavigationController {
     private void navigateToProfile() {
         setScreen("/com/example/app/views/profile.fxml");
         updateActiveButton("profile");
+
+        // Get the current profile controller and set user data if available
+        Node profileView = screens.get("/com/example/app/views/profile.fxml");
+        if (profileView != null && loggedInUsername != null) {
+            ProfileController profileController = (ProfileController) profileView.getProperties().get("controller");
+            if (profileController != null) {
+                profileController.setUserData(loggedInUsername);
+            }
+        }
+
         if (floatingPlayerController != null && currentSong != null) {
             floatingPlayerController.setVisible(true);
+        }
+    }
+
+    public void navigateToProfileWithUser(String username) {
+        try {
+            // Load profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/app/views/profile.fxml"));
+            Node profileView = loader.load();
+
+            // Set user data
+            ProfileController profileController = loader.getController();
+            profileController.setUserData(username);
+
+            // Set in content pane
+            contentPane.getChildren().setAll(profileView);
+            updateActiveButton("profile");
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -187,5 +246,9 @@ public class NavigationController {
 
     public StackPane getContentPane() {
         return contentPane;
+    }
+
+    public void setLoggedInUsername(String username) {
+        this.loggedInUsername = username;
     }
 }
