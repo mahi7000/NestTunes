@@ -2,6 +2,8 @@ package com.example.app.controllers;
 
 
 import com.example.app.App;
+import com.example.app.database.DatabaseManager;
+import com.example.app.models.User;
 import com.example.app.utils.DatabaseConnection;
 import com.example.app.utils.PasswordUtils;
 
@@ -70,6 +72,9 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+        DatabaseManager dbManager = new DatabaseManager();
+        User user = dbManager.authenticateUser(username, password);
+
         if (username.isEmpty() || password.isEmpty()) {
             System.out.println("Please fill in all fields");
             return;
@@ -86,6 +91,7 @@ public class LoginController {
 
                 if (PasswordUtils.checkPassword(password, hashedPassword)) {
                     System.out.println("Login successful!");
+                    CurrentUserSession.getInstance().setCurrentUser(user);
                     redirectToProfile(username);
                 } else {
                     System.out.println("Incorrect password!");

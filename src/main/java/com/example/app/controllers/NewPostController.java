@@ -88,7 +88,7 @@ public class NewPostController {
             try (Connection conn = DatabaseConnection.getConnection()) {
                 String sql = "INSERT INTO posts (user_id, song_title, artist_name, album_picture, song_file) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, getCurrentUserId()); // replace with actual user ID logic
+                stmt.setInt(1, getCurrentUserId());
                 stmt.setString(2, songTitleField.getText());
                 stmt.setString(3, artistNameField.getText());
                 stmt.setString(4, "src/main/resources/com/example/app/images/" + imageName);
@@ -114,7 +114,6 @@ public class NewPostController {
     }
 
     private int getCurrentUserId() {
-        // TODO: Replace with session-based logged-in user ID
         return 1;
     }
 

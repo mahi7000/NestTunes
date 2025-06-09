@@ -1,6 +1,8 @@
 package com.example.app.controllers;
 
+import com.example.app.database.DatabaseManager;
 import com.example.app.models.Song;
+import com.example.app.models.User;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -179,22 +181,40 @@ public class NowPlayingController {
     @FXML
     private void handleAuthorClick(MouseEvent event) {
         try {
-            // Get the current song's artist
             Song currentSong = mediaManager.getCurrentSong();
-            if (currentSong == null) return;
+            if (currentSong == null) {
+                System.out.println("No current song playing");
+                return;
+            }
 
-            // Load the OthersProfile view
+            DatabaseManager dbManager = new DatabaseManager();
+
+            // Get user ID from the song
+            int userId = dbManager.getUserIdFromSong(currentSong.getTitle());
+            if (userId == -1) {
+                System.out.println("No user found for song: " + currentSong.getTitle());
+                return;
+            }
+
+            // Get user details
+            User artist = dbManager.getUserById(userId);
+            if (artist == null) {
+                System.out.println("No user found with ID: " + userId);
+                return;
+            }
+
+            System.out.println("Loading profile for user: " + artist.getUsername());
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/app/views/OthersProfile.fxml"));
             Node othersProfileView = loader.load();
 
-            // Get the controller and pass artist data if needed
+            OthersProfileController controller = loader.getController();
+            controller.setUser(artist);
 
-            // Get the NavigationController from the current scene
             StackPane contentPane = (StackPane) authorName.getScene().lookup("#contentPane");
             if (contentPane != null) {
                 contentPane.getChildren().setAll(othersProfileView);
 
-                // Update navigation state if using NavigationController
                 NavigationController navController = (NavigationController)
                         contentPane.getScene().getRoot().getProperties().get("controller");
                 if (navController != null) {

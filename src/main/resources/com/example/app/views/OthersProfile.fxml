@@ -31,9 +31,9 @@
                             <Label fx:id="userHandle" styleClass="profile-handle" text="\@handle" />
                         </VBox>
 
-                        <HBox alignment="CENTER" spacing="20">
-                            <Button fx:id="followButton" styleClass="transparent" text="Follow +"/>
-                        </HBox>
+                        <!-- Follow button -->
+                        <Button fx:id="followButton" text="Follow" onAction="#handleFollowAction"
+                                styleClass="follow-button"/>
 
                         <TabPane fx:id="profileTabs" tabClosingPolicy="UNAVAILABLE" styleClass="transparent" prefWidth="750">
                             <tabs>

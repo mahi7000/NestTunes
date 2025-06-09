@@ -26,4 +26,6 @@ module com.example.app {
     exports com.example.app;
     exports com.example.app.controllers;
     opens com.example.app.controllers to javafx.fxml;
+    exports com.example.app.services;
+    opens com.example.app.services to javafx.fxml;
 }

@@ -2,6 +2,8 @@ package com.example.app.controllers;
 
 import com.example.app.database.DatabaseManager;
 import com.example.app.models.Song;
+import com.example.app.services.SongSearchService;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.*;
 import javafx.fxml.*;
@@ -11,6 +13,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.kordamp.ikonli.javafx.FontIcon;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class ExploreController {
@@ -29,6 +36,8 @@ public class ExploreController {
 
     // Reference to your media manager
     private final MediaManager mediaManager = MediaManager.getInstance();
+    private final ExecutorService executor = Executors.newCachedThreadPool();
+    private final SongSearchService searchService = new SongSearchService();
 
     @FXML
     public void initialize() {
@@ -46,7 +55,14 @@ public class ExploreController {
     }
 
     private void setupSearch() {
-        searchField.textProperty().addListener((obs, oldVal, newVal) -> filterSongs(newVal));
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && !newVal.isEmpty()) {
+                performSearch(newVal);
+            } else {
+                filteredSongs.clear();
+                currentPage.set(1);
+            }
+        });
     }
 
     private void setupListView() {
@@ -57,7 +73,6 @@ public class ExploreController {
             private final Button playBtn = new Button();
 
             {
-                // Configure layout
                 VBox textBox = new VBox(titleLabel, artistLabel);
                 textBox.setSpacing(2);
 
@@ -76,7 +91,6 @@ public class ExploreController {
                 root.getStyleClass().add("song-item");
                 root.setSpacing(10);
 
-                // Add click handler for the entire row
                 root.setOnMouseClicked(e -> {
                     if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 1) {
                         handlePlay(getItem());
@@ -139,7 +153,7 @@ public class ExploreController {
 
     @FXML
     private void handleSearch() {
-        filterSongs(searchField.getText());
+        performSearch(searchField.getText());
     }
 
     @FXML
@@ -169,5 +183,35 @@ public class ExploreController {
         if (canGoNext.get()) {
             currentPage.set(currentPage.get() + 1);
         }
+    }
+
+    private void performSearch(String query) {
+        if (query == null || query.isBlank()) {
+            Platform.runLater(() -> {
+                filteredSongs.setAll(allSongs);
+                currentPage.set(1);
+                updateListView(); // ✅ force UI refresh
+                System.out.println("Search query is empty. Showing all songs.");
+            });
+            return;
+        }
+
+        executor.execute(() -> {
+            try {
+                System.out.println("Searching for: " + query);
+                List<Song> results = searchService.searchSongs(query);
+
+                Platform.runLater(() -> {
+                    filteredSongs.setAll(results);
+                    currentPage.set(1);
+                    updateListView(); // ✅ force ListView to update
+                    System.out.println("Search results: " + results.size() + " songs found.");
+                });
+            } catch (IOException e) {
+                Platform.runLater(() -> {
+                    System.err.println("Error during search: " + e.getMessage());
+                });
+            }
+        });
     }
 }

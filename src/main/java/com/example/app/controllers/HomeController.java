@@ -60,15 +60,8 @@ public class HomeController {
     }
 
     private void loadAllSongs() {
-        try {
-            allLibrarySongs = Files.list(Paths.get(MUSIC_FOLDER))
-                    .filter(this::isSupportedFormat)
-                    .map(this::createSongFromFile)
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-            allLibrarySongs = new ArrayList<>();
-        }
+        DatabaseManager dbManager = new DatabaseManager();
+        allLibrarySongs = dbManager.getAllSongs();
     }
 
     private boolean isSupportedFormat(Path path) {
@@ -81,15 +74,16 @@ public class HomeController {
         return false;
     }
 
-    private Song createSongFromFile(Path filePath) {
+    private Song createSongFromFile(Path filePath, int userId) {
         String fileName = filePath.getFileName().toString();
         String songName = fileName.substring(0, fileName.lastIndexOf('.'));
 
         return new Song(
                 songName,
-                "Unkown Artist",
+                "Unknown Artist",  // Fixed typo in "Unknown"
                 DEFAULT_IMAGE,
-                filePath.toString()
+                filePath.toString(),
+                userId
         );
     }
 
